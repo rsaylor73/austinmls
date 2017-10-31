@@ -1,0 +1,186 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+	{% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+                <!-- // Begin main content
+                ===========================-->
+                <section class="main-content-section gallery-view-content">
+                    <div class="inner-wrap clear">
+                        <div class="map-list-area">
+                            <div class="sub-nav">
+                                <div class="sort-list-area">
+                                    <ul class="sort-list-nav">
+                                        <li><a href="#">sort</a>
+                                            <ul>
+                                                <li><a href="#">Price Low</a></li>
+                                                <li><a href="#">Price High</a></li>
+                                                <li><a href="#">Sq Ft Low</a></li>
+                                                <li><a href="#">Sq Ft High</a></li>
+                                                <li><a href="#">Newest Listings</a></li>
+                                                <li><a href="#">Oldest Listings</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="map-list">
+                                    <ul>
+                                        <li><a href="{{ path('list-map') }}?s=1{{params}}"><div class="map-cion">
+                                            <img src="{{asset('images/list-map-icon.gif')}}" alt="">
+                                            <img src="{{asset('images/list-map-icon2.gif')}}" alt="" class="hover-icon"></div><span>List/Map</span></a>
+                                        </li>
+                                        <li><a href="{{ path('gallery-map') }}?s=1{{params}}"><div class="map-cion">
+                                            <img src="{{asset('images/gallery-map-icon.gif')}}" alt="">
+                                            <img src="{{asset('images/gallery-map-icon2.gif')}}" alt="" class="hover-icon"></div><span>Gallery/Map</span></a>
+                                        </li>
+                                        <li><a href="{{ path('gallery') }}?s=1{{params}}"><div class="map-cion">
+                                            <img src="{{asset('images/gallery-icon.gif')}}" alt="">
+                                            <img src="{{asset('images/gallery-icon2.gif')}}" alt="" class="hover-icon"></div><span>Gallery</span></a>
+                                        </li>
+                                        <li><a href="#">
+                                            <div class="map-cion">
+                                                <img src="{{asset('images/map-small.png')}}" alt="">
+                                                <img src="{{asset('images/map-icon2.gif')}}" alt="" class="hover-icon">
+                                            </div><span>Map</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="email-receive">
+                                <div class="recevie-btn">
+                                    <a href="#">Receive Email Alerts</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="gallery-view-section">
+                        <div class="gallery-inner">
+
+
+                            {% for p in property%}
+                            <!-- 1 -->
+                            <div class="slide-item-wrap">
+                                <div class="property-slider">
+                                    <ul class="slides">
+                                        {% if p.images is defined %}
+                                            {% for value in p.images %}
+                                                <li class="slide">
+                                                    <img src="{{ asset('properties/')}}{{value}}" alt="">
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+
+                                        <!--
+                                        <li class="slide">
+                                            <img src="{{asset('images/property-image-size.jpg')}}" alt="">
+                                        </li>
+                                        <li class="slide">
+                                            <img src="{{asset('images/property-image-size.jpg')}}" alt="">
+                                        </li>
+                                        <li class="slide">
+                                            <img src="{{asset('images/property-image-size.jpg')}}" alt="">
+                                        </li>
+                                        -->
+                                    </ul>
+                                </div>
+                                <div class="slide-info">
+                                    <div class="slide-item-price">
+                                        <p>${{p.ListPrice|number_format(0, '.', ',')}}</p>
+                                        <p><span>{{ p.NumMainLevelBeds + p.NumOtherLevelBeds }}</span><span class="small-slide-item-conten">bd</span><span>{{ p.BathsFull }}</span><span class="small-slide-item-conten">ba</span></p>
+                                    </div>
+                                    <div class="slide-info-details-wrap">
+                                        <div class="slide-info-size">
+                                            <p>{{ p.SqftTotal|number_format(0, '.', ',')}}<span>sq ft</span></p>
+                                            <p>{{p.LotSizeArea}}<span>ac</span></p>
+                                            <p>{{p.YearBuilt}}<span>yr built</span></p>
+                                        </div>
+                                        <address>
+                                            <p>{{ p.Address }}<br>{{p.City}}, {{p.StateOrProvince}} {{p.PostalCode}} </p>
+                                            <div class="slide-info-details-btn-wrap">
+                                                <a href="#"><img src="{{asset('images/details.gif')}}" alt=""></a>
+                                                <a href="#" class="preview"><img src="{{asset('images/preview.gif')}}" alt=""></a>
+                                            </div>
+                                            <div class="slide-info-details-links-wrap">
+                                                <span>{{p.SubdivisionName}}</span>
+                                                <div class="slide-info-details-link">
+                                                    <a href="#"><img src="{{asset('images/share.gif')}}" alt=""></a>
+                                                    <a href="#"><img src="{{asset('images/favorite.gif')}}" alt=""></a>
+                                                </div>
+                                            </div>
+                                        </address>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+
+
+                        <div class="pagination-of-pricing">
+                            {{ paginate | replace({'WEBAPP': path(url)}) | raw }}
+
+                        </div>
+
+
+
+                        </div>
+
+
+
+
+
+
+
+                    </section>
+                    <!-- Begin feature slider wrap
+                    =============================== -->
+                </section>
+                <!-- //End main contain -->
+
+        <script>
+            jQuery(function($) {
+                var items = $("#null");
+
+                var numItems = items.length;
+                var perPage = 15;
+
+                // Only show the first 2 (or first `per_page`) items initially.
+                items.slice(perPage).hide();
+
+                // Now setup the pagination using the `#pagination` div.
+                $("#pagination").pagination({
+                    items: numItems,
+                    itemsOnPage: perPage,
+                    cssStyle: "dark-theme",
+
+                    // This is the actual page changing functionality.
+                    onPageClick: function(pageNumber) {
+                        // We need to show and hide `tr`s appropriately.
+                        var showFrom = perPage * (pageNumber - 1);
+                        var showTo = showFrom + perPage;
+
+                        // We'll first hide everything...
+                        items.hide()
+                             // ... and then only show the appropriate rows.
+                             .slice(showFrom, showTo).show();
+                    }
+                });
+            });
+        </script>
+
+      	{% set vars = {'featured': featured} %}
+        {% include 'home/featured.html.twig' with vars %}
+
+        {% set vars = {'justin': justin} %}
+        {% include 'home/justlisted.html.twig' with vars %}
+   
+ 
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+	{% include('footer.html.twig') %}
+{% endblock %}

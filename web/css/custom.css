@@ -1,0 +1,20 @@
+/*------------------------------pagination style start --------------------------------------*/
+.pagination__controls {
+    text-align: center;
+}
+.pagination>li:first-child>a, .pagination>li:last-child>a {
+    border-radius: 0px;
+}
+
+.list-map-pagination-row {
+    position: absolute;
+    width: 231.31%;
+    top: 625px;
+    padding: 0;
+    text-align: left;
+    background: #555555;
+}
+#list-map .pagination {
+    margin: 10px 0px 10px 5%;
+}
+/*------------------------------pagination style end --------------------------------------*/

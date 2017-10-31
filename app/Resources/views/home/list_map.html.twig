@@ -1,0 +1,309 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+	{% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+    <!-- Begin main content section -->
+    <section class="main-content-section map-content">
+        <div class="inner-wrap clear">
+            <div class="map-list-area">
+               <div class="sub-nav">
+                   <div class="sort-list-area">
+                       <ul class="sort-list-nav">
+                           <li><a href="#">sort</a>
+                               <ul>
+                                   <li><a href="#">Price Low</a></li>
+                                   <li><a href="#">Price High</a></li>
+                                   <li><a href="#">Sq Ft Low</a></li>
+                                   <li><a href="#">Sq Ft High</a></li>
+                                   <li><a href="#">Newest Listings</a></li>
+                                   <li><a href="#">Oldest Listings</a></li>
+                               </ul>
+                           </li>
+                       </ul>
+                    </div>
+                   <div class="map-list">
+                       <ul>
+                           <li><a href="{{ path('list-map') }}?s=1{{params}}"><div class="map-cion">
+                               <img src="{{asset('images/list-map-icon.gif')}}" alt="">
+                               <img src="{{asset('images/list-map-icon2.gif')}}" alt="" class="hover-icon"></div><span>List/Map</span></a>
+                           </li>
+                           <li><a href="{{ path('gallery-map') }}?s=1{{params}}"><div class="map-cion">
+                               <img src="{{asset('images/gallery-map-icon.gif')}}" alt="">
+                               <img src="{{asset('images/gallery-map-icon2.gif')}}" alt="" class="hover-icon"></div>
+                               <span>Gallery/Map</span></a>
+                           </li>
+                           <li><a href="{{ path('gallery') }}?s=1{{params}}"><div class="map-cion">
+                               <img src="{{asset('images/gallery-icon.gif')}}" alt="">
+                               <img src="{{asset('images/gallery-icon2.gif')}}" alt="" class="hover-icon"></div><span>Gallery</span></a>
+                           </li>
+                           <li><a href="#">
+                               <div class="map-cion">
+                                   <img src="{{asset('images/map-small.png')}}" alt="">
+                                   <img src="{{asset('images/map-icon2.gif')}}" alt="" class="hover-icon">
+                               </div><span>Map</span></a>
+                           </li>
+                       </ul>
+                   </div>
+                </div>
+                <div class="search-return-title">
+                    <h3>Your Search Returned 10,480 Results</h3>
+                    <p>Please use the search options above to narrow your search results</p>
+                </div>
+                <div class="email-receive">
+                    <div class="recevie-btn">
+                        <a href="#">Receive Email Alerts</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="map-details-wrap">
+            <div class="map-address-wrap">
+               
+               <div id="property_container"> <!-- Ajax Results -->
+               <div class="address-top-deals">
+                    <div class="address-thumb">
+                        <figure><img src="{{asset('properties')}}\{{ images }}" alt=""></figure>
+                        <div class="slide-item-price">
+                            <p>$ {{ ListPrice|number_format(2, '.', ',') }}</p>
+                            <p><span>{{ beds }}</span><span class="small-slide-item-conten">bd</span>
+                            <span>{{ full_bath }} . {{ half_bath }}</span><span class="small-slide-item-conten">ba</span></p>
+                        </div>
+                    </div>
+                    <div class="address-text">
+                        <div class="address-title">
+                            {{ Address }} <br>{{ City }}, {{ StateOrProvince }} {{ PostalCode }}
+                        </div>
+                        <div class="address-deals">
+                            <div class="address-size">
+                            <div><span>Sq Ft:</span><dfn>{{ SqftTotal|number_format(0, '.', ',') }}</dfn></div>
+                            <div><span>Acres:</span><dfn>{{ LotSizeArea }}</dfn></div>
+                            <div><span>Yr Built:</span><dfn>{{ YearBuilt }}</dfn></div>
+                            <div><span>Garage:</span><dfn>TBD</dfn></div>
+                            <div><span>Subdivision:</span><dfn>{{ SubdivisionName }}</dfn></div>
+                            </div>
+                            <div class="address-link">
+                                <div class="slide-info-details-btn-wrap">
+                                    <a href="#"><img src="{{ asset('images/details.gif') }}" alt=""></a>
+                                    <a href="#" class="preview"><img src="{{ asset('images/preview.gif') }}" alt=""></a>
+                                </div>
+                                <div class="slide-info-details-link">
+                                    <a href="#"><img src="{{ asset('images/share.gif') }}" alt=""></a>
+                                    <a href="#"><img src="{{ asset('images/favorite.gif') }}" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div> <!-- End Ajax Results -->
+
+                <div class="address-pricing-details-info">
+                    {#
+                    <div class="address-pricing-title">
+                        <h6 class="address-of-road"> Address</h6>
+                        <h6 class="area"> City</h6>
+                        <h6 class="price">Price</h6>
+                        <h6 class="bed">Bed</h6>
+                        <h6 class="bath">Bath</h6>
+                        <h6 class="sq-ft">Sq Ft</h6>
+                    </div>
+                    #}
+                    <div class="address-and-pricing-area">
+                      <table class="table table-striped table-hover" id="content">
+
+                      <thead>
+                        <th>Address</th>
+                        <th>&nbsp;</th>
+                        <th>City</th>
+                        <th>Price</th>
+                        <th>Bed</th>
+                        <th>Bath</th>
+                        <th>Sq Ft</th>
+                      </thead>
+
+                      <tbody>
+                    	<!-- loop -->
+                      {% for p in property%}
+                        
+                        <form name="myform_{{p.Matrix_Unique_ID}}" style="display:inline">
+                        <input type="hidden" name="id" value="{{p.Matrix_Unique_ID}}">
+                        <tr>
+                          <td><a href="javascript:void(0)" onclick="property_container(myform_{{p.Matrix_Unique_ID}})">{{ p.Address }}</a>
+                          </td>
+                          <td>
+                          <a href="#/" id="map_{{p.Matrix_Unique_ID}}"><i class="fa fa-map" aria-hidden="true"></i></a>
+                          </td>
+
+                          <td>{{ p.City }}</td>
+                          <td>$ {{ p.ListPrice|number_format(0, '.', ',') }}</td>
+                          <td>{{ p.NumMainLevelBeds + p.NumOtherLevelBeds }}</td>
+                          <td>{{ p.BathsFull }}</td>
+                          <td>{{ p.SqftTotal|number_format(0, '.', ',')}}</td>
+                        </tr>
+                        </form>
+
+
+                      {% endfor %}
+                      </tbody>
+                      </table>
+                        <!-- end loop and remove duplicate from testing -->
+                    </div>
+
+                    <script>
+                    function property_container(myform) {
+                      $.post('{{path('property_container')}}',
+                      $(myform).serialize(),
+                      function(php_msg) {
+                            $("#property_container").html(php_msg);
+                      });
+                      window.scrollTo(0, 0);
+                    }
+                    </script>
+
+                </div>
+            </div>
+            <div class="gallery-map-wrap">
+
+
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8BZnjFrejZosG6L6VSsys5tgTbZ2BEhQ"></script>
+<script type="text/javascript">
+    var markers = [
+
+    {% for p in property%}
+      {
+          "title": '{{ p.Address }}',
+          "lat": '{{ p.Latitude }}',
+          "lng": '{{ p.Longitude }}',
+          "description": '{{ p.Address }} <br>{{ p.City }}, {{ p.StateOrProvince }} {{ p.PostalCode }}<br><br>$ {{ p.ListPrice|number_format(0, '.', ',') }}',
+          "icon": "red-circle.png"
+      },
+
+    {% endfor %}
+
+    ];
+
+
+    window.onload = function () {
+        LoadMap();
+    }
+    function LoadMap() {
+        var mapOptions = {
+            center: new google.maps.LatLng(30.2672,-97.7431),
+            zoom: 8,
+            disableDefaultUI: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+
+        {% for p in property %}
+        $("#map_{{p.Matrix_Unique_ID}}").on("click", function() {
+            console.log('{{p.Matrix_Unique_ID}}');
+            var laLatLng = new google.maps.LatLng({{p.Latitude}}, {{p.Longitude}});
+            map.panTo(laLatLng);
+            map.setZoom(18);
+
+            var marker2 = new google.maps.Marker({
+                position: laLatLng,
+                map: map,
+                title: '{{ p.Address }}',
+                icon: iconBase + data.icon
+            });
+
+            infoWindow.setContent("<div style = 'width:200px;min-height:20px'>" + '{{ p.Address }} <br>{{ p.City }}, {{ p.StateOrProvince }} {{ p.PostalCode }}<br><br>$ {{ p.ListPrice|number_format(0, '.', ',') }}' + "</div>");
+            infoWindow.open(map, marker2);      
+         });
+        {% endfor %}
+
+ 
+        //Create and open InfoWindow.
+        var infoWindow = new google.maps.InfoWindow();
+ 
+        for (var i = 0; i < markers.length; i++) {
+            var data = markers[i];
+            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+            var iconBase = '{{ asset('images/markers/')}}';
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: data.title,
+                icon: iconBase + data.icon
+            });
+ 
+            //Attach click event to the marker.
+            (function (marker, data) {
+                google.maps.event.addListener(marker, "click", function (e) {
+                    //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
+                    infoWindow.setContent("<div style = 'width:200px;min-height:20px'>" + data.description + "</div>");
+                    infoWindow.open(map, marker);
+                });
+            })(marker, data);
+        }
+    }
+</script>
+<br><br>
+<div id="dvMap" style="width: 800px; height: 820px"></div>
+
+
+
+            </div>
+            <div class="pagination-of-pricing">
+            {{ paginate | replace({'WEBAPP': path(url)}) | raw }}
+
+              <!--<div id="pagination"></div>-->
+            </div>
+        </div>
+
+<!--
+        <script>
+            jQuery(function($) {
+                var items = $("#content tbody tr");
+
+                var numItems = items.length;
+                var perPage = 15;
+
+                // Only show the first 2 (or first `per_page`) items initially.
+                items.slice(perPage).hide();
+
+                // Now setup the pagination using the `#pagination` div.
+                $("#pagination").pagination({
+                    items: numItems,
+                    itemsOnPage: perPage,
+                    cssStyle: "dark-theme",
+
+                    // This is the actual page changing functionality.
+                    onPageClick: function(pageNumber) {
+                        // We need to show and hide `tr`s appropriately.
+                        var showFrom = perPage * (pageNumber - 1);
+                        var showTo = showFrom + perPage;
+
+                        // We'll first hide everything...
+                        items.hide()
+                             // ... and then only show the appropriate rows.
+                             .slice(showFrom, showTo).show();
+                    }
+                });
+            });
+        </script>
+-->
+
+      	{% set vars = {'featured': featured} %}
+        {% include 'home/featured.html.twig' with vars %}
+
+        {% set vars = {'justin': justin} %}
+        {% include 'home/justlisted.html.twig' with vars %}
+   
+ 
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+	{% include('footer.html.twig') %}
+{% endblock %}

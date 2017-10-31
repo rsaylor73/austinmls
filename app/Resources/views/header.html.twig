@@ -1,0 +1,656 @@
+{% block page_header %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>Austin MLS Listings | List Map View</title>
+       
+    <link href="https://fonts.googleapis.com/css?family=Lato:900|Roboto:300,400,400i,500,700" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/selectric.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/slick-theme.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/slick.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/flexslider.css') }}">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/simplePagination.css') }}">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+       
+    <script type="text/javascript" src="{{ asset('scripts/jquery-1.12.4.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('scripts/slick.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('scripts/jquery.flexslider.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('scripts/jquery.selectric.js') }}"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="{{ asset('scripts/common-scripts.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('scripts/jquery.simplePagination.js') }}"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <div class="main-wrap">
+           <div class="main-inner-wrap">
+               <!-- Begin main content section 
+               ================================= -->
+                <section class="header-wrap">
+                    <div class="logo-wrap">
+                        <div class="main-logo"><a href="{{ path('homepage') }}"><img src="{{ asset('images/free-austin-mls-logo.png') }}" alt=""></a></div>
+                        <div class="mobi-nav">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+
+                    <div class="search-wrap">
+                        <div class="search-details-wrap">
+                            <!-- Begin search form 
+                            ======================== -->
+                            <form method="get" name="form1">
+                                <div class="search-box">
+                                    <input type="text" name="property_search" placeholder="Enter City, Neighborhood, Zip, Address, School, MLS#">
+                                </div>
+
+                                <!-- //End search form -->
+
+                                <!-- Begin another form 
+                                ========================== -->
+                                <div class="search-right">
+                                    <div class="search-features">
+                                        <div class="feature-row">
+                                            <ul>
+                                                <li><a href="#">Status &amp; Type</a>
+                                                    <ul class="status-and-types-deals">
+                                                        <li>
+                                                            <div class="input-features">
+                                                                <div class="features-item">
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="comming_soon" value="checked" id="a-option">
+                                                                        <label for="a-option">Comming Soon</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="active" value="checked" id="b-option">
+                                                                        <label for="b-option">Active</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="active_contingent" value="checked" id="c-option">
+                                                                        <label for="c-option">Active Contingent</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="pending" value="checked" id="d-option">
+                                                                        <label for="d-option">Pending</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="pending_backups" value="checked" id="e-option">
+                                                                        <label for="e-option">Pending - Taking Backups</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="open_house" value="checked" id="f-option">
+                                                                        <label for="f-option">Open House Only</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="features-item">
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="house" value="checked" id="1-option">
+                                                                        <label for="1-option">House</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="condo" value="checked" id="2-option">
+                                                                        <label for="2-option">Condo</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="townhouse" value="checked" id="3-option">
+                                                                        <label for="3-option">Townhouse</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="modular" value="checked" id="4-option">
+                                                                        <label for="4-option">Modular Home</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="mobile" value="checked" id="5-option">
+                                                                        <label for="5-option">Mobile Home</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="manufactured" value="checked" id="6-option">
+                                                                        <label for="6-option">Manufactured Home</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                    <div class="input-info">
+                                                                        <input type="checkbox" name="duplex" value="checked" id="7-option">
+                                                                        <label for="7-option">Attached 1/2 Duplex</label>
+                                                                        <div class="check"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="date-picker-wrap">
+                                                                    <div class="input-field">
+                                                                        <input type="text" name="date1" class="datepicker">
+                                                                    </div>
+                                                                    <label>to</label>
+                                                                    <div class="input-field">
+                                                                        <input type="text" name="date2" class="datepicker">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#">Price &amp; Size</a>
+                                                    <ul class="price-and-size-deals">
+                                                        <li>
+                                                            <div class="price-and-size">
+                                                                <div class="price-info">
+                                                                    <div class="pricingrange-bar">
+                                                                        <div id = "pricingRange"></div>
+                                                                    </div>
+                                                                    <div class="range-value">
+                                                                        <div class="input-row">
+                                                                        <input type="number" name="minRange" id="minRange" class="price-value">
+
+                                                                        </div>
+                                                                        <div class="input-row">
+                                                                        <input type="number" name="maxRange" id="maxRange" class="price-value">                
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="size-info">
+                                                                    <div class="size-row">
+                                                                        <label>Bedrooms</label>
+                                                                        <input type="number" placeholder="min" name="bedmin" class="light-gray">
+                                                                        <input type="number" placeholder="max" name="bedmax" class="light-gray">
+                                                                    </div>
+                                                                    <div class="size-row">
+                                                                        <label>Bathrooms</label>
+                                                                        <input type="number" placeholder="min" name="bathmin" class="light-gray">
+                                                                        <input type="number" placeholder="max" name="bathmax" class="light-gray">
+                                                                    </div>
+                                                                    <div class="size-row">
+                                                                        <label>Sq Feet</label>
+                                                                        <input type="number" placeholder="min" name="sqfmin" class="light-gray">
+                                                                        <input type="number" placeholder="max"  name="sqfmax" class="light-gray">
+                                                                    </div>
+                                                                    <div class="size-row">
+                                                                        <label>Stories</label>
+                                                                        <input type="number" placeholder="min" name="storiesmin" class="light-gray">
+                                                                        <input type="number" placeholder="max" name="storiesmax" class="light-gray">
+                                                                    </div>
+                                                                    <div class="size-row">
+                                                                        <label>Garage Spaces</label>
+                                                                        <input type="number" placeholder="min" name="garagemin" class="light-gray">
+                                                                        <input type="number" placeholder="max" name="garagemax" class="light-gray">
+                                                                    </div>
+
+                                                                    <div class="size-row">
+                                                                        <label>Acres</label>
+                                                                        <input type="number" placeholder="min" name="acresmin" step=".01" class="light-gray">
+                                                                        <input type="number" placeholder="max" name="acresmax" step=".01" class="light-gray">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#">Features</a>
+                                                    <ul class="features-deals">
+                                                        <li>
+                                                            <div class="yes-no-details">
+                                                                <div class="input-row">
+                                                                    <span>Master On Main</span>
+                                                                    <div class="radio-row-deals">
+                                                                        <div class="radio-row">
+                                                                            <input type="radio"  name="choose1" id="any-1" value="Any" checked>
+                                                                            <label for="any-1">Any</label>
+                                                                            <div class="check"></div>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose1" id="yes-1" value="Yes">
+                                                                            <label for="yes-1">Yes</label>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose1" id="no-1" value="No">
+                                                                            <label for="no-1">No</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="input-row">
+                                                                    <span>Pool</span>
+                                                                    <div class="radio-row-deals">
+                                                                        <div class="radio-row">
+                                                                            <input type="radio"  name="choose2" id="any-2" value="Any" checked>
+                                                                            <label for="any-2">Any</label>
+                                                                            <div class="check"></div>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose2" id="yes-2" value="Yes">
+                                                                            <label for="yes-2">Yes</label>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose2" id="no-2" value="No">
+                                                                            <label for="no-2">No</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="input-row">
+                                                                    <span>Waterfront</span>
+                                                                    <div class="radio-row-deals">
+                                                                        <div class="radio-row">
+                                                                            <input type="radio"  name="choose3" id="any-3" value="Any" checked>
+                                                                            <label for="any-3">Any</label>
+                                                                            <div class="check"></div>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose3" id="yes-3" value="Yes">
+                                                                            <label for="yes-3">Yes</label>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose3" id="no-3" value="No">
+                                                                            <label for="no-3">No</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="input-row">
+                                                                    <span>Fireplace</span>
+                                                                    <div class="radio-row-deals">
+                                                                        <div class="radio-row">
+                                                                            <input type="radio"  name="choose4" id="any-4" value="Any" checked>
+                                                                            <label for="any-4">Any</label>
+                                                                            <div class="check"></div>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose4" id="yes-4" value="Yes">
+                                                                            <label for="yes-4">Yes</label>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose4" id="no-4" value="No">
+                                                                            <label for="no-4">No</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="input-row">
+                                                                    <span>Disability Features</span>
+                                                                    <div class="radio-row-deals">
+                                                                        <div class="radio-row">
+                                                                            <input type="radio"  name="choose5" id="any-5" value="Any" checked>
+                                                                            <label for="any-5">Any</label>
+                                                                            <div class="check"></div>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose5" id="yes-5" value="Yes">
+                                                                            <label for="yes-5">Yes</label>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose5" id="no-5" value="No">
+                                                                            <label for="no-5">No</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="input-row">
+                                                                    <span>Gated Community</span>
+                                                                    <div class="radio-row-deals">
+                                                                        <div class="radio-row">
+                                                                            <input type="radio"  name="choose6" id="any-6" value="Any" checked>
+                                                                            <label for="any-6">Any</label>
+                                                                            <div class="check"></div>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose6" id="yes-6" value="Yes">
+                                                                            <label for="yes-6">Yes</label>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose6" id="no-6" value="No">
+                                                                            <label for="no-6">No</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="input-row">
+                                                                    <span>HOA</span>
+                                                                    <div class="radio-row-deals">
+                                                                        <div class="radio-row">
+                                                                            <input type="radio"  name="choose7" id="any-7" value="Any" checked>
+                                                                            <label for="any-7">Any</label>
+                                                                            <div class="check"></div>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose7" id="yes-7" value="Yes">
+                                                                            <label for="yes-7">Yes</label>
+                                                                        </div>
+                                                                        <div class="radio-row">
+                                                                            <input type="radio" name="choose7" id="no-7" value="No">
+                                                                            <label for="no-7">No</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li><a href="#">More</a>
+                                                    <ul class="more-deals">
+                                                        <li>
+                                                            <div class="more-search">
+                                                                <div class="more-search-row">
+                                                                    <div class="input-row">
+                                                                        <label>City</label>
+                                                                        <select multiple name="city[]" class="multiple-select">
+                                                                            <option>Austin</option>
+                                                                            <option>Bastrop</option>
+                                                                            <option>Bee Cave</option>
+                                                                            <option>Briarcliff</option>
+                                                                            <option>Buda</option>
+                                                                            <option>Burnet</option>
+                                                                            <option>Cedar Creek</option>
+                                                                            <option>Cedar Park</option>
+                                                                            <option>Del Valle</option>
+                                                                            <option>Driftwood</option>
+                                                                            <option>Dripping Springs</option>
+                                                                            <option>Elgin</option>
+                                                                            <option>Frederickburg</option>
+                                                                            <option>Georgetown</option>
+                                                                            <option>Granite Shoals</option>
+                                                                            <option>Henly</option>
+                                                                            <option>Horseshoe Bay</option>
+                                                                            <option>Hutto</option>
+                                                                            <option>Jarrell</option>
+                                                                            <option>Johnson City</option>
+                                                                            <option>Jonestown</option>
+                                                                            <option>Kyle</option>
+                                                                            <option>Lago Vista</option>
+                                                                            <option>Lampasas</option>
+                                                                            <option>Leander</option>
+                                                                            <option>Liberty Hill</option>
+                                                                            <option>Llano</option>
+                                                                            <option>Lockhart</option>
+                                                                            <option>Manchaca</option>
+                                                                            <option>Manor</option>
+                                                                            <option>Marble Falls</option>
+                                                                            <option>New Braunfels</option>
+                                                                            <option>Pflugerville</option>
+                                                                            <option>Pointe Venture</option>
+                                                                            <option>Rollingwood</option>
+                                                                            <option>Round Rock</option>
+                                                                            <option>San Marcos</option>
+                                                                            <option>Taylor</option>
+                                                                            <option>The Hills</option>
+                                                                            <option>Volente</option>
+                                                                            <option>West Lake Hills</option>
+                                                                            <option>Wimberley</option>
+                                                                            <option>Woodcreek</option>
+                                                                        </select>
+                                                                        <dfn>Hold down "Ctrl" to select multiple cities</dfn>
+                                                                    </div>
+                                                                    <div class="input-row">
+                                                                        <label>Zip Code</label>
+                                                                        <input type="text" name="zip">
+                                                                    </div>
+                                                                    <div class="input-row">
+                                                                        <label>Neighborhod</label>
+                                                                        <input type="text" name="neighborhod">
+                                                                    </div>
+                                                                    <div class="input-row">
+                                                                        <label>County</label>
+                                                                        <input type="text" name="county">
+                                                                    </div>
+                                                                    <div class="input-row">
+                                                                        <label>Yr Built</label>
+                                                                        <input type="text" placeholder="min" name="yearmin" class="light-gray">
+                                                                        <input type="text" placeholder="max" name="yearmax" class="light-gray">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="more-search-row">
+                                                                    <div class="input-row">
+                                                                        <label>Street Number</label>
+                                                                        <input type="text" name="streetnumber">
+                                                                    </div>
+                                                                    <div class="input-row">
+                                                                        <label>Street Name</label>
+                                                                        <input type="text" name="streetname">
+                                                                    </div>
+                                                                    <div class="input-row">
+                                                                        <label>School District</label>
+                                                                        <input type="text" name="school">
+                                                                    </div>
+                                                                    <div class="input-row">
+                                                                        <label>Elementary</label>
+                                                                        <input type="text" name="es">
+                                                                    </div>
+                                                                    <div class="input-row">
+                                                                        <label>Middle</label>
+                                                                        <input type="text" name="ms">
+                                                                    </div>
+                                                                    <div class="input-row">
+                                                                        <label>High School</label>
+                                                                        <input type="text" name="hs">
+                                                                    </div>
+                                                                    <div class="input-row">
+                                                                        <label>Days on Market</label>
+                                                                        <input type="text" placeholder="" ="min" name="daysmin" class="light-gray">
+                                                                        <input type="text" placeholder="max" name="daysmax" class="light-gray">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="selectric-row-wrap">
+                                                                    <div class="selctric-item-row">
+                                                                        <label>View</label>
+                                                                        <div class="selectric-info">
+                                                                            <span>Any</span>
+                                                                            <select name="view[]" multiple class="multiple-select">
+                                                                                <option>City</option>
+                                                                                <option>Greenbelt</option>
+                                                                                <option>Golf Course</option>
+                                                                                <option>Hill country</option>
+                                                                                <option>Lake/River</option>
+                                                                                <option>Panoramic</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="selctric-item-row">
+                                                                        <label>Neighborhood Amenities</label>
+                                                                        <div class="selectric-info">
+                                                                            <span>Any</span>
+                                                                            <select name="amenities[]" multiple class="multiple-select">
+                                                                                <option>Park</option>
+                                                                                <option>Club House</option>
+                                                                                <option>Golf Course</option>
+                                                                                <option>Tennis Court(2)</option>
+                                                                                <option>Lake Privileges</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="selctric-item-row">
+                                                                        <label>Lot</label>
+                                                                        <div class="selectric-info">
+                                                                            <span>Any</span>
+                                                                            <select name="lot[]" multiple class="multiple-select">
+                                                                                <option>Corner</option>
+                                                                                <option>Wooded</option>
+                                                                                <option>Cul-De-Sac</option>
+                                                                                <option>Backs to Golf Course</option>
+                                                                                <option>Backs to Greenbelt</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="selctric-item-row">
+                                                                        <label>Water Access Type</label>
+                                                                        <div class="selectric-info">
+                                                                            <span>Any</span>
+                                                                            <select name="access_type[]" multiple class="multiple-select">
+                                                                                <option>Boat Lift</option>
+                                                                                <option>Boat Slip</option>
+                                                                                <option>Common Dock</option>
+                                                                                <option>Dock Available</option>
+                                                                                <option>Private Dock</option>
+                                                                                <option>Public Ramp</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="selctric-item-row">
+                                                                        <label>Waterfront Description</label>
+                                                                        <div class="selectric-info">
+                                                                            <span>Any</span>
+                                                                            <select name="waterfront_desc[]" multiple class="multiple-select">
+                                                                                <option>Canal</option>
+                                                                                <option>Creek/Stream</option>
+                                                                                <option>Lake</option>
+                                                                                <option>Pond</option>
+                                                                                <option>River</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="selctric-item-row">
+                                                                        <label>Body of Water</label>
+                                                                        <div class="selectric-info">
+                                                                            <span>Any</span>
+                                                                            <select name="body_water[]" multiple class="multiple-select">
+                                                                                <option>Blanco River</option>
+                                                                                <option>Brazos River</option>
+                                                                                <option>Buchanan Lake</option>
+                                                                                <option>Canyon Lake</option>
+                                                                                <option>Colorado River</option>
+                                                                                <option>Comal River</option>
+                                                                                <option>Guadalupe River</option>
+                                                                                <option>Inks Lake</option>
+                                                                                <option>Lady Bird Lake</option>
+                                                                                <option>Lake Austin</option>
+                                                                                <option>Lake Bastrop</option>
+                                                                                <option>Lake Georgetown</option>
+                                                                                <option>Lake LBJ</option>
+                                                                                <option>Lake Marble Falls</option>
+                                                                                <option>Lake Travis</option>
+                                                                                <option>Llano River</option>
+                                                                                <option>Pedernales River</option>
+                                                                                <option>San Gabriel River</option>
+                                                                                <option>San Marcos River</option>
+                                                                                <option>San Saba River</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <dfn>Hold down "Ctrl" to select multiple cities</dfn>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="submit-btn">
+                                            <input type="submit" value="GO" class="blue-btn">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- //End another form -->
+                        </div>
+                        <div class="login-and-signup-section">
+                            <div class="login-wrap">
+                                <a href="#" id="login">Login</a>
+                                <a href="#" id="register">Register</a>
+                            </div>
+                            <!-- Begin sign up popup section 
+                            =============================== -->
+                            <section class="sign-up-section" id="login-section">
+                                <span class="first-title">Login</span>
+                                <div class="input-wrap">
+                                    <form action="#" method="post">
+                                        <p>Don't have an account?<a href="#" class="register-here">Register Here</a></p>
+                                        <div class="login-info">
+                                            <div class="input-row">
+                                                <input type="text" value="Email" class="transparent-btn">
+                                            </div>
+                                            <div class="input-row ">
+                                                <input type="text" value="Password" class="transparent-btn">
+                                            </div>
+                                            <div class="submit-btn">
+                                                <input type="submit" value="Login" class="navy-blue-btn">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="login-instant">
+                                        <dfn>or login instantly</dfn>
+                                        <div class="instant-link">
+                                            <a href="#"><img src="{{ asset('images/login-facebook.gif') }}" alt=""></a>
+                                            <a href="#"><img src="{{ asset('images/login-google.gif') }}" alt=""></a>
+                                            <a href="#"><img src="{{ asset('images/login-twitter.gif') }}" alt=""></a>
+                                            <a href="#"><img src="{{ asset('images/login-yahoo.gif') }}" alt=""></a>
+                                        </div>
+                                        <div class="lost-password"><a href="#">Lost Your Password?</a></div>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- //End sign up section popup-->
+
+                            <!-- Begin register popup section 
+                            ================================== -->
+                            <section class="sign-up-section register" id="register-section">
+                                <span class="first-title">Register</span>
+                                <div class="input-wrap">
+                                    <form action="#" method="post">
+                                        <p>Already have an account?<a href="#" class="login-here">Login Here</a></p>
+                                        <div class="login-info">
+                                            <div class="input-row">
+                                                <input type="text" value="First Name" class="transparent-btn">
+                                            </div>
+                                            <div class="input-row ">
+                                                <input type="text" value="Last Name" class="transparent-btn">
+                                            </div>
+                                            <div class="input-row">
+                                                <input type="text" value="Email" class="transparent-btn">
+                                            </div>
+                                            <div class="input-row ">
+                                                <input type="text" value="Phone" class="transparent-btn">
+                                            </div>
+                                            <div class="input-row">
+                                                <input type="text" value="Password" class="transparent-btn">
+                                            </div>
+                                            <div class="input-row ">
+                                                <input type="text" value="Repeat Password" class="transparent-btn">
+                                            </div>
+                                            <div class="submit-btn">
+                                                <input type="submit" value="Create Your Free Account" class="navy-blue-btn">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="login-instant">
+                                        <dfn>or register instantly</dfn>
+                                        <div class="instant-link">
+                                            <a href="#"><img src="{{ asset('images/login-facebook.gif') }}" alt=""></a>
+                                            <a href="#"><img src="{{ asset('images/login-google.gif') }}" alt=""></a>
+                                            <a href="#"><img src="{{ asset('images/login-twitter.gif') }}" alt=""></a>
+                                            <a href="#"><img src="{{ asset('images/login-yahoo.gif') }}" alt=""></a>
+                                        </div>
+                                        <div class="lost-password"><a href="#">Lost Your Password?</a></div>
+                                    </div>
+                                </div>
+                                <div class="benefit-of-register">
+                                    <h4>Benefits of Registering</h4>
+                                    <div class="benefit-list">
+                                        <ul>
+                                            <li>Save and track your favorite properties</li>
+                                            <li>Unrestricted access to MLS listings with full property details and photos</li>
+                                            <li>Save searches and receive automated alerts when new listings come on the market that match your criteria (or whren the list price changes on any current listings)</li>
+                                            <li>Answeres to your property specific questions</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+                            <!-- //End register popup section -->
+                        </div>
+                    </div>
+
+                </section>
+                <!-- //End main section -->
+{% endblock %}

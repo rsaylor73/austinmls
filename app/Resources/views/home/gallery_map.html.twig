@@ -1,0 +1,233 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+	{% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+
+                <section class="main-content-section gallery-map-content">
+                    <div class="inner-wrap clear">
+                        <div class="map-list-area">
+                            <div class="sub-nav">
+                                <div class="sort-list-area">
+                                    <ul class="sort-list-nav">
+                                        <li><a href="#">sort</a>
+                                            <ul>
+                                                <li><a href="#">Price Low</a></li>
+                                                <li><a href="#">Price High</a></li>
+                                                <li><a href="#">Sq Ft Low</a></li>
+                                                <li><a href="#">Sq Ft High</a></li>
+                                                <li><a href="#">Newest Listings</a></li>
+                                                <li><a href="#">Oldest Listings</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="map-list">
+                                    <ul>
+                                        <li><a href="{{ path('list-map') }}?s=1{{params}}"><div class="map-cion">
+                                            <img src="{{asset('images/list-map-icon.gif')}}" alt="">
+                                            <img src="{{asset('images/list-map-icon2.gif')}}" alt="" class="hover-icon"></div><span>List/Map</span></a>
+                                        </li>
+                                        <li><a href="{{ path('gallery-map') }}?s=1{{params}}"><div class="map-cion">
+                                            <img src="{{asset('images/gallery-map-icon.gif')}}" alt="">
+                                            <img src="{{asset('images/gallery-map-icon2.gif')}}" alt="" class="hover-icon"></div><span>Gallery/Map</span></a>
+                                        </li>
+                                        <li><a href="{{ path('gallery') }}?s=1{{params}}"><div class="map-cion">
+                                            <img src="{{asset('images/gallery-icon.gif')}}" alt="">
+                                            <img src="{{asset('images/gallery-icon2.gif')}}" alt="" class="hover-icon"></div><span>Gallery</span></a>
+                                        </li>
+                                        <li><a href="#">
+                                            <div class="map-cion">
+                                                <img src="{{asset('images/map-small.png')}}" alt="">
+                                                <img src="{{asset('images/map-icon2.gif')}}" alt="" class="hover-icon">
+                                            </div><span>Map</span></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="email-receive">
+                               <div class="recevie-btn">
+                                   <a href="#">Receive Email Alerts</a>
+                               </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-wrap">
+                       <!-- Begin gallery slider wrap
+                       =================================== -->
+
+                        <div class="gallery-slide-wrap">
+                            
+
+
+
+                            {% for p in property%}
+                            <div class="slide-item-wrap">
+                                <div class="property-slider">
+                                    <ul class="slides">
+
+
+                                        {% if p.images is defined %}
+                                            {% for value in p.images %}
+                                                <li class="slide">
+                                                    <img src="{{ asset('properties/')}}{{value}}" alt="">
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+
+                                        <!--
+                                        <li class="slide">
+                                            <img src="{{asset('images/property-image-size.jpg')}}" alt="">
+                                        </li>
+                                        <li class="slide">
+                                            <img src="{{asset('images/property-image-size.jpg')}}" alt="">
+                                        </li>
+                                        <li class="slide">
+                                            <img src="{{asset('images/property-image-size.jpg')}}" alt="">
+                                        </li>
+                                        -->
+                                    </ul>
+                                </div>
+                                <div class="slide-info">
+                                    <div class="slide-item-price">
+                                        <p>$ {{ p.ListPrice|number_format(0, '.', ',') }}</p>
+                                        <p><span>{{p.BedsTotal}}</span><span class="small-slide-item-conten">bd</span><span>{{p.BathsFull}}</span><span class="small-slide-item-conten">ba</span></p>
+                                    </div>
+                                    <div class="slide-info-details-wrap">
+                                        <div class="slide-info-size">
+                                            <p>{{ p.SqftTotal|number_format(0, '.', ',')}}<span>sq ft</span></p>
+                                            <p>{{p.LotSizeArea}}<span>ac</span></p>
+                                            <p>{{p.YearBuilt}}<span>yr built</span></p>
+                                        </div>
+                                        <address>
+                                            <p>{{ p.Address }} {{ p.City }}, {{p.StateOrProvince}} {{p.PostalCode}}</p>
+                                            <div class="slide-info-details-btn-wrap">
+                                                <a href="#"><img src="{{asset('images/details.gif')}}" alt=""></a>
+                                                <a href="#" class="preview"><img src="{{asset('images/preview.gif')}}" alt=""></a>
+                                            </div>
+                                            <div class="slide-info-details-links-wrap">
+                                                <span>Barton Creek</span>
+                                                <div class="slide-info-details-link">
+                                                    <a href="#"><img src="{{asset('images/share.gif')}}" alt=""></a>
+                                                    <a href="#"><img src="{{asset('images/favorite.gif')}}" alt=""></a>
+                                                    <a href="#/" id="map_{{p.Matrix_Unique_ID}}"><i class="fa fa-map" aria-hidden="true"></i></a>
+                                                </div>
+                                            </div>
+                                        </address>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+
+                            <div class="pagination-of-pricing">
+                            {{ paginate | replace({'WEBAPP': path(url)}) | raw }}
+                            </div>
+
+
+                        </div>
+                        <!-- //End gallery slider wrap -->
+                        <!-- Begin gallery map
+                        ======================= -->
+
+
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8BZnjFrejZosG6L6VSsys5tgTbZ2BEhQ"></script>
+<script type="text/javascript">
+    var markers = [
+
+    {% for p in property%}
+      {
+          "title": '{{ p.Address }}',
+          "lat": '{{ p.Latitude }}',
+          "lng": '{{ p.Longitude }}',
+          "description": '{{ p.Address }} <br>{{ p.City }}, {{ p.StateOrProvince }} {{ p.PostalCode }}<br><br>$ {{ p.ListPrice|number_format(0, '.', ',') }}',
+          "icon": "red-circle.png"
+      },
+
+    {% endfor %}
+
+    ];
+
+
+    window.onload = function () {
+        LoadMap();
+    }
+    function LoadMap() {
+        var mapOptions = {
+            center: new google.maps.LatLng(30.2672,-97.7431),
+            zoom: 11,
+            disableDefaultUI: false,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+
+        {% for p in property %}
+        $("#map_{{p.Matrix_Unique_ID}}").on("click", function() {
+            console.log('{{p.Matrix_Unique_ID}}');
+            var laLatLng = new google.maps.LatLng({{p.Latitude}}, {{p.Longitude}});
+            map.panTo(laLatLng);
+            map.setZoom(18);
+
+            var marker2 = new google.maps.Marker({
+                position: laLatLng,
+                map: map,
+                title: '{{ p.Address }}',
+                icon: iconBase + data.icon
+            });
+
+            infoWindow.setContent("<div style = 'width:200px;min-height:20px'>" + '{{ p.Address }} <br>{{ p.City }}, {{ p.StateOrProvince }} {{ p.PostalCode }}<br><br>$ {{ p.ListPrice|number_format(0, '.', ',') }}' + "</div>");
+            infoWindow.open(map, marker2);      
+         });
+        {% endfor %}
+
+ 
+        //Create and open InfoWindow.
+        var infoWindow = new google.maps.InfoWindow();
+ 
+        for (var i = 0; i < markers.length; i++) {
+            var data = markers[i];
+            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+            var iconBase = '{{ asset('images/markers/')}}';
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: data.title,
+                icon: iconBase + data.icon
+            });
+ 
+            //Attach click event to the marker.
+            (function (marker, data) {
+                google.maps.event.addListener(marker, "click", function (e) {
+                    //Wrap the content inside an HTML DIV in order to set height and width of InfoWindow.
+                    infoWindow.setContent("<div style = 'width:200px;min-height:20px'>" + data.description + "</div>");
+                    infoWindow.open(map, marker);
+                });
+            })(marker, data);
+        }
+    }
+</script>
+<div id="dvMap" class="gallery-map-wrap" style="width: 800px; height: 1120px"></div>
+
+
+                        <!-- End Begin galler map -->
+                    </div>
+
+      	{% set vars = {'featured': featured} %}
+        {% include 'home/featured.html.twig' with vars %}
+
+        {% set vars = {'justin': justin} %}
+        {% include 'home/justlisted.html.twig' with vars %}
+   
+ 
+</div>
+
+
+{% endblock %}
+
+{% block footer %}
+	{% include('footer.html.twig') %}
+{% endblock %}

@@ -1,0 +1,36 @@
+<div class="address-top-deals">
+    <div class="address-thumb">
+        <figure><img src="{{ asset('properties') }}/{{images}}" alt=""></figure>
+        <div class="slide-item-price">
+            <p>$ {{ ListPrice|number_format(0, '.', ',') }}</p>
+            <p><span>{{ beds }}</span><span class="small-slide-item-conten">bd</span>
+            <span>{{ full_bath }} . {{ half_bath }}</span><span class="small-slide-item-conten">ba</span></p>
+        </div>
+    </div>
+    <div class="address-text">
+        <div class="address-title">
+            {{ Address }} <br>{{ City }}, {{ StateOrProvince }} {{ PostalCode }}
+        </div>
+        <div class="address-deals">
+            <div class="address-size">
+            <div><span>Sq Ft:</span><dfn>
+
+            {{ SqftTotal|number_format(0, '.', ',') }}</dfn></div>
+            <div><span>Acres:</span><dfn>{{ LotSizeArea }}</dfn></div>
+            <div><span>Yr Built:</span><dfn>{{ YearBuilt }}</dfn></div>
+            <div><span>Garage:</span><dfn>TBD</dfn></div>
+            <div><span>Subdivision:</span><dfn>{{ SubdivisionName }}</dfn></div>
+            </div>
+            <div class="address-link">
+                <div class="slide-info-details-btn-wrap">
+                    <a href="#"><img src="{{ asset('images/details.gif') }}" alt=""></a>
+                    <a href="#" class="preview"><img src="{{ asset('images/preview.gif') }}" alt=""></a>
+                </div>
+                <div class="slide-info-details-link">
+                    <a href="#"><img src="{{ asset('images/share.gif') }}" alt=""></a>
+                    <a href="#"><img src="{{ asset('images/favorite.gif') }}" alt=""></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
