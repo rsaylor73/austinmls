@@ -14,22 +14,27 @@
                     <div class="feature-content-wraper">
                         <div class="feature-content">
                             <div class="feature-content-title">
-                                <h2>12417 Fairfax Ridge PL<span>Austin, TX 78738</span></h2>
+                                <h2>{{Address}}<span>{{City}}, {{StateOrProvince}} {{PostalCode}}</span></h2>
                                 <div class="active-favorite">
                                     <a href="#" class="feature-active-btn">Active</a>
                                     <a href="#" class="feature-favorites-btn"><img src="images/preview-favorites.gif" alt=""></a>
                                 </div>
                             </div>
                             <div class="feature-icon-title">
-                                <div class="feature-icon-item"><img src="{{asset('images/property-sq-ft.gif')}}" alt=""><span>3,453 sq ft</span></div>
-                                <div class="feature-icon-item"><img src="{{asset('images/bedrooms.gif')}}" alt=""> <span>5 Bedrooms</span></div>
-                                <div class="feature-icon-item"><img src="{{asset('images/baths.gif')}}" alt=""> <span>3.5 Baths</span></div>
-                                <div class="feature-icon-item"><img src="{{asset('images/garage.gif')}}" alt=""> <span>3 Car Garage</span></div>
-                                <div class="feature-icon-item"><img src="{{asset('images/acres.gif')}}" alt=""> <span>0.3 acres</span></div>
+                                <div class="feature-icon-item"><img src="{{asset('images/property-sq-ft.gif')}}" alt="">
+				<span>{{SqftTotal|number_format(0, '.', ',')}} sq ft</span></div>
+                                <div class="feature-icon-item"><img src="{{asset('images/bedrooms.gif')}}" alt=""> 
+				<span>{{beds}} Bedrooms</span></div>
+                                <div class="feature-icon-item"><img src="{{asset('images/baths.gif')}}" alt=""> 
+				<span>{{full_bath}}{% if half_bath > 0 %}.5{% endif %} Baths</span></div>
+                                <div class="feature-icon-item"><img src="{{asset('images/garage.gif')}}" alt=""> 
+				<span>TBD Car Garage</span></div>
+                                <div class="feature-icon-item"><img src="{{asset('images/acres.gif')}}" alt=""> 
+				<span>{{LotSizeArea}} acres</span></div>
                             </div>
                             <div class="feature-content-figure">
                                 <figure>
-                                    <img src="{{asset('images/address-thumb.png')}}" alt="">
+                                    <img src="{{asset('properties')}}\{{ images }}" alt="">
                                 </figure>
                                 <div class="feature-content-icon">
                                     <a href="#"><img src="{{asset('images/camera-icon.jpg')}}" alt=""></a>
@@ -48,7 +53,8 @@
                             <a href="#"><img src="{{asset('images/print-property-info.gif')}}" alt=""></a>
                             <a href="#"><img src="{{asset('images/download-property-info.gif')}}" alt=""></a>
                         </div>
-                        <h2 class="feature-price">$499,000<span>$144.51 $/SF</span></h2>
+                        <h2 class="feature-price">${{ListPrice|number_format(0, '.', ',')}}<span>
+                        {{price_per_sqf|number_format(0, '.', ',')}} $/SF</span></h2>
                         <div class="feature-form-area">
                             <p>For more info or to schedule a showing, please submit the below or call <a href="#">(512)416-9990</a></p>
                             <form action="#" method="post">
@@ -75,30 +81,18 @@
                     =========================== -->
                     <div class="featured-carousel" id="featured-carousel">
                         <div class="carousel-inner">
-                            <div class="carousel-item">
-                                <img src="{{asset('images/property-detail-image-size2.gif')}}" alt="">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{{asset('images/property-detail-image-size2.gif')}}" alt="">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{{asset('images/property-detail-image-size2.gif')}}" alt="">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{{asset('images/property-detail-image-size2.gif')}}" alt="">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{{asset('images/property-detail-image-size2.gif')}}" alt="">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{{asset('images/property-detail-image-size2.gif')}}" alt="">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{{asset('images/property-detail-image-size2.gif')}}" alt="">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="{{asset('images/property-detail-image-size2.gif')}}" alt="">
-                            </div>
+
+{% for p in property%}
+                                        {% if p.images is defined %}
+                                            {% for value in p.images %}
+                                                <div class=""carousel-item">
+                                                    <img src="{{ asset('properties/')}}{{value}}" alt="">
+                                                </div>
+                                            {% endfor %}
+                                        {% endif %}
+
+{% endfor %}
+
                         </div>
                     </div>
                 </div>
@@ -108,7 +102,7 @@
                 <div class="feature-tab-section-area">
                     <div class="tab-menu">
                         <div class="custom-container clear">
-                            <p>A rare find in Spanish Oaks. Meticulously designed custom home w/ authentic European aesthetic &amp; modern amenities. This floor plan was perfected for effortless living, flow &amp; natural light. There are multiple living areas, a separate office &amp; exercise room. Imported Spanish clay roof tile, carved limestone cladding &amp; trim, wide plank white oak wood floors, Calacutta Gold marble, inset cabinetry. Full price offer includes a $50,000 pool credit. Luxury resort style community, amenities &amp; golf</p>
+                            <p>DETAILED WRITE UP TBD</p>
                             <div class="tab-item" id="tab-item">
                                 <ul>
                                     <li class="active">Basic info</li>
@@ -125,21 +119,21 @@
                                 <div class="tab-cotent-item">
                                     <h6>General</h6>
                                     <ul>
-                                        <li><span>Property Type:</span>House</li>
-                                        <li><span>Yr Built:</span>200</li>
-                                        <li><span>Stories:</span>2</li>
-                                        <li><span>Pool:</span>yes</li>
-                                        <li><span>Spa:</span>No</li>
+                                        <li><span>Property Type:</span>{{PropertySubType}}</li>
+                                        <li><span>Yr Built:</span>{{YearBuilt}}</li>
+                                        <li><span>Stories:</span>{{StoriesLookup}}</li>
+                                        <li><span>Pool:</span>{{PoolonProperty}}</li>
+                                        <li><span>Spa:</span>TBD</li>
                                     </ul>
                                 </div>
                                 <div class="tab-cotent-item">
                                     <h6>Listing info</h6>
                                     <ul>
-                                        <li><span>Mls#:</span>9388559</li>
-                                        <li><span>Foreclosure/REO:</span>No</li>
-                                        <li><span>Active Days on Market:</span>175</li>
-                                        <li><span>Cumulative Days on Market:</span>175</li>
-                                        <li><span>Original List Price:</span>$668,000</li>
+                                        <li><span>MLS#:</span>{{MLSNumber}}</li>
+                                        <li><span>Foreclosure/REO:</span>TBD</li>
+                                        <li><span>Active Days on Market:</span>TBD</li>
+                                        <li><span>Cumulative Days on Market:</span>TBD</li>
+                                        <li><span>Original List Price:</span>TBD</li>
                                     </ul>
                                 </div>
                             </div>
@@ -147,19 +141,19 @@
                                 <div class="tab-cotent-item">
                                     <h6>location</h6>
                                     <ul>
-                                        <li><span>Country:</span>Travis</li>
-                                        <li><span>MLS Area:</span>LS</li>
-                                        <li><span>Subdivision:</span>Lake Pointe Ph 02</li>
-                                        <li><span>Legal:</span>LOT 24 BLKBKE POINTEPHS II</li>
+                                        <li><span>Country:</span>TBD</li>
+                                        <li><span>MLS Area:</span>TB</li>
+                                        <li><span>Subdivision:</span>{{SubdivisionName}}</li>
+                                        <li><span>Legal:</span>TBD</li>
                                     </ul>
                                 </div>
                                 <div class="tab-cotent-item">
                                     <h6>Construction</h6>
                                     <ul>
-                                        <li><span>Roof:</span>Composition Shingle</li>
-                                        <li><span>Foundation:</span>Slab</li>
-                                        <li><span>Construction:</span>All Sides Masonry</li>
-                                        <li><span>Builder Name:</span>Ryland Homes</li>
+                                        <li><span>Roof:</span>TBD</li>
+                                        <li><span>Foundation:</span>TBD</li>
+                                        <li><span>Construction:</span>TBD</li>
+                                        <li><span>Builder Name:</span>TBD</li>
                                     </ul>
                                 </div>
                             </div> 
@@ -167,23 +161,25 @@
                                 <div class="tab-cotent-item">
                                     <h6>Lot</h6>
                                     <ul>
-                                        <li><span>Lot Description:</span>Backs To Greenbelt</li>
-                                        <li><span>View:</span>Hill County</li>
-                                        <li><span>Faces:</span>East</li>
-                                        <li><span>Waterfront</span>No</li>
-                                        <li><span>Body of water</span>None</li>
-                                        <li><span>Water Access:</span>Yes/See Agent</li>
+                                        <li><span>Lot Description:</span>TBD</li>
+                                        <li><span>View:</span>TBD</li>
+                                        <li><span>Faces:</span>TBD</li>
+                                        <li><span>Waterfront</span>TBD</li>
+                                        <li><span>Body of water</span>{{BodyofWater}}</li>
+                                        <li><span>Water Access:</span>{{WaterAccess}}</li>
                                     </ul>
                                 </div>
                                 <div class="tab-cotent-item">
                                     <h6>Rooms</h6>
                                     <ul>
-                                        <li><span>Main Level Bedrooms:</span>1 <div><span>Other Level Bedrooms:</span>4</div></li>
-                                        <li><span>Full Baths:</span>3 <div><span>Half Baths:</span>0</div></li>
-                                        <li><span>Master Main:</span>No</li>
-                                        <li><span>Living Areas:</span>2</li>
-                                        <li><span>Dining Areas:</span>2/Breakfast Area, Formal  Dining Room</li>
-                                        <li><span>Rooms:</span>Family, Formal Living</li>
+                                        <li><span>Main Level Bedrooms:</span>{{NumMainLevelBeds}} 
+					<div><span>Other Level Bedrooms:</span>{{NumOtherLevelBeds}}</div></li>
+                                        <li><span>Full Baths:</span>{{BathsFull}} 
+					<div><span>Half Baths:</span>{{BathsHalf}}</div></li>
+                                        <li><span>Master Main:</span>TBD</li>
+                                        <li><span>Living Areas:</span>TBD</li>
+                                        <li><span>Dining Areas:</span>TBD</li>
+                                        <li><span>Rooms:</span>TBD</li>
                                     </ul>
                                 </div>
                             </div>
@@ -191,14 +187,14 @@
                                 <div class="tab-content-text">
                                     <h6>Interior Features</h6>
                                     <ul>
-                                        <li><span>Fireplaces:</span>1, Family Room</li>
-                                        <li><span>Master Description:</span>Double Vanity, Garden Tub, Jetted Tub, Separate Shower, Walk-in-Closet, Walk-in Shower</li>
-                                        <li><span>Flooring:</span>Carpet, Tile-Hard, Wood</li>
-                                        <li><span>Laundry Location:</span>Upper Level, Utility/Laundry Room</li>
-                                        <li><span>Laundry Facilities:</span>Dryer Connection-Gas, Sink, Washer Connections</li>
-                                        <li><span>Appliances and Equipment:</span>Cook Top Gas, Dishwasher, Disposal, Exhaust Fan Vented, Range-Free Standing, Single Oven, Water Filter Owned, Water Filter Owned, Water Heater Electric, Water Softener Owned</li>
-                                        <li><span>Interior Features:</span>Crown Molding, French Doors, Indoor Utlities, In-Law Plan, Security System-Owned, Smoke Detector, Walk-In Closet, Wired for Stereo, Wired for Surround Sound</li>
-                                        <li><span>Disability Features:</span>No</li>
+                                        <li><span>Fireplaces:</span>TBD</li>
+                                        <li><span>Master Description:</span>TBD</li>
+                                        <li><span>Flooring:</span>TBD</li>
+                                        <li><span>Laundry Location:</span>TBD</li>
+                                        <li><span>Laundry Facilities:</span>TBD</li>
+                                        <li><span>Appliances and Equipment:</span>TBD</li>
+                                        <li><span>Interior Features:</span>TBD</li>
+                                        <li><span>Disability Features:</span>TBD</li>
                                     </ul>
                                 </div>
                             </div>
@@ -206,11 +202,11 @@
                                 <div class="tab-content-text">
                                     <h6>Exterior Features</h6>
                                     <ul>
-                                        <li><span>Garage Description:</span>Attached, Door-Multi, Enty-Front, Entry-Side Spinklers:Automatic, Multiple Yards</li>
-                                        <li><span>Fence:</span>Wrought Iron</li>
-                                        <li><span>Steps:</span>Font Steps, Interior Steps</li>
-                                        <li><span>Exterior Features:</span>Balcony, Decorative Pond, Gutters Full, Private BackYard</li>
-                                        <li><span>Parking:</span>Attached, Entry-Front</li>
+                                        <li><span>Garage Description:</span>{{GarageDescription}}</li>
+                                        <li><span>Fence:</span>{{Fence}}</li>
+                                        <li><span>Steps:</span>TBD</li>
+                                        <li><span>Exterior Features:</span>TBD</li>
+                                        <li><span>Parking:</span>{{ParkingFeatures}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -221,17 +217,17 @@
                                 <div class="tab-cotent-item">
                                     <h6>School Information</h6>
                                     <ul>
-                                        <li><span>School District:</span>Lake Travis ISD</li>
-                                        <li><span>Elementary:</span>Lake Pointe</li>
-                                        <li><span>Middle:</span>Lake Travis</li>
-                                        <li><span>High School:</span>Lake Travis</li>
+                                        <li><span>School District:</span>{{SchoolDistrict}}</li>
+                                        <li><span>Elementary:</span>{{ElementaryA}}</li>
+                                        <li><span>Middle:</span>{{MiddleIntermediateSchool}}</li>
+                                        <li><span>High School:</span>{{SeniorHighSchool}}</li>
                                     </ul>
                                 </div>
                                 <div class="tab-cotent-item">
                                     <h6>Community</h6>
                                     <ul>
-                                        <li><span>Gated Community:</span>Yes</li>
-                                        <li><span>Community Amenities:</span>Club House, Cluster Mailbox, Lake Privileges, Park, Play Ground, Pool-Community, Sport Court(s), Tennis Court(s)</li>
+                                        <li><span>Gated Community:</span>TBD</li>
+                                        <li><span>Community Amenities:</span>TBD</li>
                                     </ul>
                                 </div>
                             </div>
@@ -242,23 +238,23 @@
                                 <div class="tab-cotent-item">
                                     <h6>Financial Information</h6>
                                     <ul>
-                                        <li><span>HOA Name:</span>Lake Pointe on Lake Austin</li>
-                                        <li><span>HOA Fee:</span>$400/Mandatory/Annually</li>
-                                        <li><span>Est Tax:</span>$9,300</li>
-                                        <li><span>Act Tax:</span>$8,820</li>
-                                        <li><span>Tax Year:</span>2016</li>
-                                        <li><span>Tax Rate: 2.3242%</span></li>
-                                        <li><span>Exempt: Homestead</span></li>
+                                        <li><span>HOA Name:</span>TBD</li>
+                                        <li><span>HOA Fee:</span>$TBD</li>
+                                        <li><span>Est Tax:</span>$TBD</li>
+                                        <li><span>Act Tax:</span>$TBD</li>
+                                        <li><span>Tax Year:</span>TBD</li>
+                                        <li><span>Tax Rate: TBD%</span></li>
+                                        <li><span>Exempt: TBD</span></li>
                                     </ul>
                                 </div>
                                 <div class="tab-cotent-item">
                                     <h6>Utility Information</h6>
                                     <ul>
-                                        <li><span>Water:</span>MUD</li>
-                                        <li><span>A/C:</span>Central Air</li>
-                                        <li><span>Heat:</span>Central Heat, Electric</li>
-                                        <li><span>Sewer:</span>MUD</li>
-                                        <li><span>Utilities:</span>Electricity on Property, Propane on Property, See Agent</li>
+                                        <li><span>Water:</span>TBD</li>
+                                        <li><span>A/C:</span>TBD</li>
+                                        <li><span>Heat:</span>TBD</li>
+                                        <li><span>Sewer:</span>TBD</li>
+                                        <li><span>Utilities:</span>TBD</li>
                                     </ul>
                                 </div>
                             </div> 

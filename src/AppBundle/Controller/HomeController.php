@@ -388,7 +388,8 @@ class HomeController extends Controller
         $justin = "5";
         $sql = json_encode($sql);
         return $this->render('home/'.$template,[
-            'featured' => $featured,
+            'Matrix_Unique_ID' => $Matrix_Unique_ID,
+	    'featured' => $featured,
             'justin' => $justin,
             'property' => $data,
             'images' => $images,
