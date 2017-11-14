@@ -112,7 +112,8 @@ class GetPropertiesCommand extends ContainerAwareCommand
 	        	`PropertySubType`,
 	        	`PropertyType`,
 	        	`WaterAccess`,
-	        	`StoriesLookup`
+	        	`StoriesLookup`,
+			`ActualTax`
 	        	) VALUES (
 	        	'$properties->Matrix_Unique_ID',
 	        	'$properties->Latitude',
@@ -160,7 +161,8 @@ class GetPropertiesCommand extends ContainerAwareCommand
 	        	'$properties->PropertySubType',
 	        	'$properties->PropertyType',
 	        	'$properties->WaterAccess',
-	        	'$properties->StoriesLookup'
+	        	'$properties->StoriesLookup',
+			'$properties->ActualTax'
 	        	)
 	        	";
 				$query = $em->getConnection()->prepare($sql);
@@ -258,7 +260,8 @@ class GetPropertiesCommand extends ContainerAwareCommand
 	        	`PropertySubType` = '$properties->PropertySubType',
 	        	`PropertyType` = '$properties->PropertyType',
 	        	`WaterAccess` = '$properties->WaterAccess',
-	        	`StoriesLookup` = '$properties->StoriesLookup'
+	        	`StoriesLookup` = '$properties->StoriesLookup',
+			`ActualTax` = '$properties->ActualTax'
 
 	        	WHERE `Matrix_Unique_ID` = '$properties->Matrix_Unique_ID'
 	        	";
@@ -300,7 +303,7 @@ class GetPropertiesCommand extends ContainerAwareCommand
         $results = $rets->Search("Property", "RESI", "(city=|$city)",
                 array(
                     "Limit" => $limit, 
-                    "Select" => "Matrix_Unique_ID,Latitude,Longitude,ListPrice,Address,City,StateOrProvince,PostalCode,NumMainLevelBeds,NumOtherLevelBeds,BathsHalf,NumGuestHalfBaths,NumGuestFullBaths,BathsFull,SqftTotal,LotSizeArea,YearBuilt,CoveredSpaces,SubdivisionName,MLSNumber,GarageDescription,Latitude,Longitude,Status,Gr9HighSchool,JuniorHighSchool,MiddleIntermediateSchool,SchoolDistrict,SeniorHighSchool,ElementaryA,BedsTotal,BodyofWater,Fence,FireplaceFeatures,Flooring,GarageDescription,IsDeleted,LandSQFT,LastStatus,NumParkingSpaces,OpenHouseUpcoming,OpenHouseDatePublic,OpenHouseTimePublic,ParkingFeatures,PoolonProperty,PropertySubType,PropertyType,WaterAccess,StoriesLookup"
+                    "Select" => "Matrix_Unique_ID,Latitude,Longitude,ListPrice,Address,City,StateOrProvince,PostalCode,NumMainLevelBeds,NumOtherLevelBeds,BathsHalf,NumGuestHalfBaths,NumGuestFullBaths,BathsFull,SqftTotal,LotSizeArea,YearBuilt,CoveredSpaces,SubdivisionName,MLSNumber,GarageDescription,Latitude,Longitude,Status,Gr9HighSchool,JuniorHighSchool,MiddleIntermediateSchool,SchoolDistrict,SeniorHighSchool,ElementaryA,BedsTotal,BodyofWater,Fence,FireplaceFeatures,Flooring,GarageDescription,IsDeleted,LandSQFT,LastStatus,NumParkingSpaces,OpenHouseUpcoming,OpenHouseDatePublic,OpenHouseTimePublic,ParkingFeatures,PoolonProperty,PropertySubType,PropertyType,WaterAccess,StoriesLookup,ActualTax"
                 )); 
         return($results);           	
     }
