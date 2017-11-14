@@ -113,7 +113,22 @@ class GetPropertiesCommand extends ContainerAwareCommand
 	        	`PropertyType`,
 	        	`WaterAccess`,
 	        	`StoriesLookup`,
-			`ActualTax`
+	        	`ActualTax`,
+	        	`Area`,
+	        	`AreaAmenities`,
+	        	`AssociationFee`,
+	        	`BuilderName`,
+	        	`Construction`,
+	        	`CountyOrParish`,
+	        	`DiningDescription`,
+	        	`DisabilityFeatures`,
+	        	`ExteriorFeatures`,
+	        	`Faces`,
+	        	`Flooring`,
+	        	`ForeclosureREO`,
+	        	`FoundationDetails`,
+	        	`GatedCommunity`,
+	        	`HOAName`
 	        	) VALUES (
 	        	'$properties->Matrix_Unique_ID',
 	        	'$properties->Latitude',
@@ -162,7 +177,22 @@ class GetPropertiesCommand extends ContainerAwareCommand
 	        	'$properties->PropertyType',
 	        	'$properties->WaterAccess',
 	        	'$properties->StoriesLookup',
-			'$properties->ActualTax'
+				'$properties->ActualTax',
+				'$properties->Area',
+				'$properties->AreaAmenities',
+				'$properties->AssociationFee',
+				'$properties->BuilderName',
+				'$properties->Construction',
+				'$properties->CountyOrParish',
+				'$properties->DiningDescription',
+				'$properties->DisabilityFeatures',
+				'$properties->ExteriorFeatures',
+				'$properties->Faces',
+				'$properties->Flooring',
+				'$properties->ForeclosureREO',
+				'$properties->FoundationDetails',
+				'$properties->GatedCommunity',
+				'$properties->HOAName'
 	        	)
 	        	";
 				$query = $em->getConnection()->prepare($sql);
@@ -261,7 +291,21 @@ class GetPropertiesCommand extends ContainerAwareCommand
 	        	`PropertyType` = '$properties->PropertyType',
 	        	`WaterAccess` = '$properties->WaterAccess',
 	        	`StoriesLookup` = '$properties->StoriesLookup',
-			`ActualTax` = '$properties->ActualTax'
+				`ActualTax` = '$properties->ActualTax',
+				`Area` = '$properties->Area',
+				`AreaAmenities` = '$properties->AreaAmenities',
+				`AssociationFee` = '$properties->AssociationFee',
+				`BuilderName` = '$properties->BuilderName',
+				`Construction` = '$properties->Construction',
+				`CountyOrParish` = '$properties->CountyOrParish',
+				`DiningDescription` = '$properties->DiningDescription',
+				`ExteriorFeatures` = '$properties->ExteriorFeatures',
+				`Faces` = '$properties->Faces',
+				`Flooring` = '$properties->Flooring',
+				`ForeclosureREO` = '$properties->ForeclosureREO',
+				`FoundationDetails` = '$properties->FoundationDetails',
+				`GatedCommunity` = '$properties->GatedCommunity',
+				`HOAName` = '$properties->HOAName'
 
 	        	WHERE `Matrix_Unique_ID` = '$properties->Matrix_Unique_ID'
 	        	";
@@ -303,7 +347,22 @@ class GetPropertiesCommand extends ContainerAwareCommand
         $results = $rets->Search("Property", "RESI", "(city=|$city)",
                 array(
                     "Limit" => $limit, 
-                    "Select" => "Matrix_Unique_ID,Latitude,Longitude,ListPrice,Address,City,StateOrProvince,PostalCode,NumMainLevelBeds,NumOtherLevelBeds,BathsHalf,NumGuestHalfBaths,NumGuestFullBaths,BathsFull,SqftTotal,LotSizeArea,YearBuilt,CoveredSpaces,SubdivisionName,MLSNumber,GarageDescription,Latitude,Longitude,Status,Gr9HighSchool,JuniorHighSchool,MiddleIntermediateSchool,SchoolDistrict,SeniorHighSchool,ElementaryA,BedsTotal,BodyofWater,Fence,FireplaceFeatures,Flooring,GarageDescription,IsDeleted,LandSQFT,LastStatus,NumParkingSpaces,OpenHouseUpcoming,OpenHouseDatePublic,OpenHouseTimePublic,ParkingFeatures,PoolonProperty,PropertySubType,PropertyType,WaterAccess,StoriesLookup,ActualTax"
+                    "Select" => "Matrix_Unique_ID,Latitude,Longitude,ListPrice,Address,City,
+                    StateOrProvince,PostalCode,NumMainLevelBeds,NumOtherLevelBeds,BathsHalf,
+                    NumGuestHalfBaths,NumGuestFullBaths,BathsFull,SqftTotal,LotSizeArea,
+                    YearBuilt,CoveredSpaces,SubdivisionName,MLSNumber,GarageDescription,
+                    Latitude,Longitude,Status,Gr9HighSchool,JuniorHighSchool,
+                    MiddleIntermediateSchool,SchoolDistrict,SeniorHighSchool,ElementaryA,
+                    BedsTotal,BodyofWater,Fence,FireplaceFeatures,Flooring,GarageDescription,
+                    IsDeleted,LandSQFT,LastStatus,NumParkingSpaces,OpenHouseUpcoming,
+                    OpenHouseDatePublic,OpenHouseTimePublic,ParkingFeatures,PoolonProperty,
+                    PropertySubType,PropertyType,WaterAccess,StoriesLookup,
+                    ActualTax,Area,AreaAmenities,AssociationFee,BuilderName,Construction,
+                    CountyOrParish,DiningDescription,DisabilityFeatures,ExteriorFeatures,
+                    Faces,Flooring,ForeclosureREO,FoundationDetails,GatedCommunity,
+                    HOAName
+
+					"
                 )); 
         return($results);           	
     }
