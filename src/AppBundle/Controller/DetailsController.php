@@ -19,6 +19,10 @@ class DetailsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        if ($id == "") {
+        	$id = $request->query->get('id');
+        }
+
         $sql = "
         SELECT `Matrix_Unique_ID`,`Latitude`,`Longitude`,`ListPrice`,`Address`,
         `City`,`StateOrProvince`,`PostalCode`,`NumMainLevelBeds`,`NumOtherLevelBeds`,
@@ -27,7 +31,14 @@ class DetailsController extends Controller
 		`PropertyType`,`PropertySubType`,`YearBuilt`,`StoriesLookup`,`WaterAccess`,`PoolonProperty`,
 		`MLSNumber`,`SubdivisionName`,`WaterAccess`,`BodyofWater`,`GarageDescription`,`Fence`,
 		`ParkingFeatures`,`SchoolDistrict`,`ElementaryA`,`MiddleIntermediateSchool`,
-		`SeniorHighSchool`
+		`SeniorHighSchool`,`SpaHotTubYN`,`ForeclosureREO`,`CountyOrParish`,`Area`,`Roof`,
+		`FoundationDetails`,`Construction`,`BuilderName`,`LotFeatures`,`View`,`Faces`,`Waterfront`,
+		`MasterMain`,`NumLiving`,`DiningDescription`,`Rooms`,`NumFireplaces`,`MasterDescription`,
+		`Flooring`,`LaundryLocation`,`LaundryFacilities`,`KitchenAppliances`,`InteriorFeatures`,
+		`DisabilityFeatures`,`Steps`,`ExteriorFeatures`,`GatedCommunity`,`AreaAmenities`,
+		`HOAName`,`AssociationFee`,`TaxAmount`,`TaxRate`,`Utilities`,`TaxYear`,`MasterDescription`,
+		`ActualTax`,`Heating`,`WaterSource`,`Sewer`,`AC`,
+		DATE_FORMAT(`ListingContractDate`,'%Y%m%d') AS 'ListingContractDate'
 
         FROM
             `properties`
@@ -77,6 +88,47 @@ class DetailsController extends Controller
 			$ElementaryA = $property['ElementaryA'];
 			$MiddleIntermediateSchool = $property['MiddleIntermediateSchool'];
 			$SeniorHighSchool = $property['SeniorHighSchool'];
+			$SpaHotTubYN = $property['SpaHotTubYN'];	
+			$ForeclosureREO = $property['ForeclosureREO'];
+			$CountyOrParish = $property['CountyOrParish'];
+			$Area = $property['Area'];
+			$Roof = $property['Roof'];
+			$FoundationDetails = $property['FoundationDetails'];
+			$Construction = $property['Construction'];
+			$BuilderName = $property['BuilderName'];
+			$LotFeatures = $property['LotFeatures'];
+			$View = $property['View'];
+			$Faces = $property['Faces'];
+			$Waterfront = $property['Waterfront'];
+			$MasterMain = $property['MasterMain'];
+			$NumLiving = $property['NumLiving'];
+			$DiningDescription = $property['DiningDescription'];
+			$Rooms = $property['Rooms'];
+			$NumFireplaces = $property['NumFireplaces'];
+			$MasterDescription = $property['MasterDescription'];
+			$Flooring = $property['Flooring'];
+			$LaundryLocation = $property['LaundryLocation'];
+			$LaundryFacilities = $property['LaundryFacilities'];
+			$KitchenAppliances = $property['KitchenAppliances'];
+			$InteriorFeatures = $property['InteriorFeatures'];
+			$DisabilityFeatures = $property['DisabilityFeatures'];
+			$Steps = $property['Steps'];
+			$ExteriorFeatures = $property['ExteriorFeatures'];
+			$GatedCommunity = $property['GatedCommunity'];
+			$AreaAmenities = $property['AreaAmenities'];
+			$HOAName = $property['HOAName'];
+			$AssociationFee = $property['AssociationFee'];
+			$TaxAmount = $property['TaxAmount'];
+			$TaxRate = $property['TaxRate'];
+			$Utilities = $property['Utilities'];
+			$TaxYear = $property['TaxYear'];
+			$MasterDescription = $property['MasterDescription'];
+			$ActualTax = $property['ActualTax'];
+			$ListingContractDate = $property['ListingContractDate'];
+			$Heating = $property['Heating'];
+			$WaterSource = $property['WaterSource'];
+			$Sewer = $property['Sewer'];
+			$AC = $property['AC'];
 
 			// images
             $sql2 = "
@@ -125,6 +177,21 @@ class DetailsController extends Controller
 
 		$price_per_sqf = floor($ListPrice / $SqftTotal);
 
+		// To Do: get number of days from
+		// ListingContractDate
+
+		$now = date("Y-m-d");
+		$ListingContractDate = date("Y-m-d", strtotime($ListingContractDate));
+
+		$date1 = date_create($ListingContractDate);
+		$date2 = date_create($now);
+		$diff = date_diff($date1,$date2);
+		$days = $diff->format("%a");
+		$today_date = date("m/d/Y");
+
+		// Similar Properties
+		$simData = $this->get('commonservices')->GetSimilar($id);
+
         return $this->render('details/index.html.twig',[
 			'Matrix_Unique_ID' => $Matrix_Unique_ID,
 			'images' => $images,
@@ -163,6 +230,49 @@ class DetailsController extends Controller
 			'MiddleIntermediateSchool' => $MiddleIntermediateSchool,
 			'SeniorHighSchool' => $SeniorHighSchool,
 			'price_per_sqf' => $price_per_sqf,
+			'SpaHotTubYN' => $SpaHotTubYN,
+			'ForeclosureREO' => $ForeclosureREO,
+			'CountyOrParish' => $CountyOrParish,
+			'Area' => $Area,
+			'Roof' => $Roof,
+			'FoundationDetails' => $FoundationDetails,
+			'Construction' => $Construction,
+			'BuilderName' => $BuilderName,
+			'LotFeatures' => $LotFeatures,
+			'View' => $View,
+			'Faces' => $Faces,
+			'Waterfront' => $Waterfront,
+			'MasterMain' => $MasterMain,
+			'NumLiving' => $NumLiving,
+			'DiningDescription' => $DiningDescription,
+			'Rooms' => $Rooms,
+			'NumFireplaces' => $NumFireplaces,
+			'MasterDescription' => $MasterDescription,
+			'Flooring' => $Flooring,
+			'LaundryLocation' => $LaundryLocation,
+			'LaundryFacilities' => $LaundryFacilities,
+			'KitchenAppliances' => $KitchenAppliances,
+			'InteriorFeatures' => $InteriorFeatures,
+			'DisabilityFeatures' => $DisabilityFeatures,
+			'Steps' => $Steps,
+			'ExteriorFeatures' => $ExteriorFeatures,
+			'GatedCommunity' => $GatedCommunity,
+			'AreaAmenities' => $AreaAmenities,
+ 			'HOAName' => $HOAName,
+ 			'AssociationFee' => $AssociationFee,
+ 			'TaxAmount' => $TaxAmount,
+ 			'TaxRate' => $TaxRate,
+ 			'Utilities' => $Utilities,
+ 			'TaxYear' => $TaxYear,
+ 			'MasterDescription' => $MasterDescription,
+ 			'ActualTax' => $ActualTax,
+ 			'Heating' => $Heating,
+ 			'WaterSource' => $WaterSource,
+ 			'Sewer' => $Sewer,
+ 			'AC' => $AC,
+ 			'days' => $days,
+ 			'today_date' => $today_date,
+ 			'simData' => $simData
 		]);
     }
 

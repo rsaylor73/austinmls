@@ -201,6 +201,8 @@
         };
         var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
 
+
+
         {% for p in property %}
         $("#map_{{p.Matrix_Unique_ID}}").on("click", function() {
             console.log('{{p.Matrix_Unique_ID}}');

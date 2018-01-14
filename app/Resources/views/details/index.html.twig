@@ -14,7 +14,8 @@
                     <div class="feature-content-wraper">
                         <div class="feature-content">
                             <div class="feature-content-title">
-                                <h2>{{Address}}<span>{{City}}, {{StateOrProvince}} {{PostalCode}}</span></h2>
+                                {% include('flash-messages.html.twig') %}
+				<h2>{{Address}}<span>{{City}}, {{StateOrProvince}} {{PostalCode}}</span></h2>
                                 <div class="active-favorite">
                                     <a href="#" class="feature-active-btn">Active</a>
                                     <a href="#" class="feature-favorites-btn"><img src="images/preview-favorites.gif" alt=""></a>
@@ -57,18 +58,19 @@
                         {{price_per_sqf|number_format(0, '.', ',')}} $/SF</span></h2>
                         <div class="feature-form-area">
                             <p>For more info or to schedule a showing, please submit the below or call <a href="#">(512)416-9990</a></p>
-                            <form action="#" method="post">
+                            <form action="{{path('detailformmini')}}" method="post">
+                            <input type="hidden" name="id" value="{{Matrix_Unique_ID}}">
                                 <div class="input-row">
-                                    <input type="text" value="Name">
+                                    <input type="text" name="name" value="Name">
                                 </div>
                                 <div class="input-row">
-                                    <input type="text" value="Email">
+                                    <input type="text" name="email" value="Email">
                                 </div>
                                 <div class="input-row">
-                                    <input type="text" value="Phone">
+                                    <input type="text" name="phone" value="Phone">
                                 </div>
                                 <div class="input-row">
-                                    <textarea>Comments</textarea>
+                                    <textarea name="comments">Comments</textarea>
                                 </div>
                                 <div class="input-row">
                                     <input type="submit" value="Submit">
@@ -102,7 +104,7 @@
                 <div class="feature-tab-section-area">
                     <div class="tab-menu">
                         <div class="custom-container clear">
-                            <p>DETAILED WRITE UP TBD</p>
+                            <!--<p>DETAILED WRITE UP TBD</p>-->
                             <div class="tab-item" id="tab-item">
                                 <ul>
                                     <li class="active">Basic info</li>
@@ -123,17 +125,17 @@
                                         <li><span>Yr Built:</span>{{YearBuilt}}</li>
                                         <li><span>Stories:</span>{{StoriesLookup}}</li>
                                         <li><span>Pool:</span>{{PoolonProperty}}</li>
-                                        <li><span>Spa:</span>TBD</li>
+                                        <li><span>Spa:</span>{% if SpaHotTubYN == "1" %}Yes{% else %}No{% endif %}</li>
                                     </ul>
                                 </div>
                                 <div class="tab-cotent-item">
                                     <h6>Listing info</h6>
                                     <ul>
                                         <li><span>MLS#:</span>{{MLSNumber}}</li>
-                                        <li><span>Foreclosure/REO:</span>TBD</li>
-                                        <li><span>Active Days on Market:</span>TBD</li>
-                                        <li><span>Cumulative Days on Market:</span>TBD</li>
-                                        <li><span>Original List Price:</span>TBD</li>
+                                        <li><span>Foreclosure/REO:</span>{% if ForeclosureREO == "1" %}Yes{% else %}No{% endif %}</li>
+                                        <li><span>Active Days on Market:</span>{{days}}</li>
+                                        <!--<li><span>Cumulative Days on Market:</span>TBD</li>-->
+                                        <li><span>Original List Price:</span>$ {{ListPrice|number_format(2, '.', ',')}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -141,19 +143,19 @@
                                 <div class="tab-cotent-item">
                                     <h6>location</h6>
                                     <ul>
-                                        <li><span>Country:</span>TBD</li>
-                                        <li><span>MLS Area:</span>TB</li>
+                                        <li><span>Country:</span>{{CountyOrParish}}</li>
+                                        <li><span>MLS Area:</span>{{Area}}</li>
                                         <li><span>Subdivision:</span>{{SubdivisionName}}</li>
-                                        <li><span>Legal:</span>TBD</li>
+                                        <!--<li><span>Legal:</span>TBD</li>-->
                                     </ul>
                                 </div>
                                 <div class="tab-cotent-item">
                                     <h6>Construction</h6>
                                     <ul>
-                                        <li><span>Roof:</span>TBD</li>
-                                        <li><span>Foundation:</span>TBD</li>
-                                        <li><span>Construction:</span>TBD</li>
-                                        <li><span>Builder Name:</span>TBD</li>
+                                        <li><span>Roof:</span>{{Roof}}</li>
+                                        <li><span>Foundation:</span>{{FoundationDetails}}</li>
+                                        <li><span>Construction:</span>{{Construction}}</li>
+                                        <li><span>Builder Name:</span>{% if BuilderName == "" %}Not available{% else %}{{BuilderName}}{% endif %}</li>
                                     </ul>
                                 </div>
                             </div> 
@@ -161,10 +163,10 @@
                                 <div class="tab-cotent-item">
                                     <h6>Lot</h6>
                                     <ul>
-                                        <li><span>Lot Description:</span>TBD</li>
-                                        <li><span>View:</span>TBD</li>
-                                        <li><span>Faces:</span>TBD</li>
-                                        <li><span>Waterfront</span>TBD</li>
+                                        <li><span>Lot Description:</span>{{LotFeatures}}</li>
+                                        <li><span>View:</span>{{View}}</li>
+                                        <li><span>Faces:</span>{{Faces}}</li>
+                                        <li><span>Waterfront</span>{% if Waterfront == "1" %}Yes{% else %}No{% endif %}</li>
                                         <li><span>Body of water</span>{{BodyofWater}}</li>
                                         <li><span>Water Access:</span>{{WaterAccess}}</li>
                                     </ul>
@@ -176,10 +178,10 @@
 					<div><span>Other Level Bedrooms:</span>{{NumOtherLevelBeds}}</div></li>
                                         <li><span>Full Baths:</span>{{BathsFull}} 
 					<div><span>Half Baths:</span>{{BathsHalf}}</div></li>
-                                        <li><span>Master Main:</span>TBD</li>
-                                        <li><span>Living Areas:</span>TBD</li>
-                                        <li><span>Dining Areas:</span>TBD</li>
-                                        <li><span>Rooms:</span>TBD</li>
+                                        <li><span>Master Main:</span>{{MasterMain}}</li>
+                                        <li><span>Living Areas:</span>{{NumLiving}}</li>
+                                        <li><span>Dining Areas:</span>{{DiningDescription}}</li>
+                                        <li><span>Rooms:</span>{{Rooms}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -187,14 +189,14 @@
                                 <div class="tab-content-text">
                                     <h6>Interior Features</h6>
                                     <ul>
-                                        <li><span>Fireplaces:</span>TBD</li>
-                                        <li><span>Master Description:</span>TBD</li>
-                                        <li><span>Flooring:</span>TBD</li>
-                                        <li><span>Laundry Location:</span>TBD</li>
-                                        <li><span>Laundry Facilities:</span>TBD</li>
-                                        <li><span>Appliances and Equipment:</span>TBD</li>
-                                        <li><span>Interior Features:</span>TBD</li>
-                                        <li><span>Disability Features:</span>TBD</li>
+                                        <li><span>Fireplaces:</span>{{NumFireplaces}}</li>
+                                        <li><span>Master Description:</span>{{MasterDescription}}</li>
+                                        <li><span>Flooring:</span>{{Flooring}}</li>
+                                        <li><span>Laundry Location:</span>{{LaundryLocation}}</li>
+                                        <li><span>Laundry Facilities:</span>{{LaundryFacilities}}</li>
+                                        <li><span>Appliances and Equipment:</span>{{KitchenAppliances}}</li>
+                                        <li><span>Interior Features:</span>{{InteriorFeatures}}</li>
+                                        <li><span>Disability Features:</span>{{DisabilityFeatures}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -204,8 +206,8 @@
                                     <ul>
                                         <li><span>Garage Description:</span>{{GarageDescription}}</li>
                                         <li><span>Fence:</span>{{Fence}}</li>
-                                        <li><span>Steps:</span>TBD</li>
-                                        <li><span>Exterior Features:</span>TBD</li>
+                                        <li><span>Steps:</span>{{Steps}}</li>
+                                        <li><span>Exterior Features:</span>{{ExteriorFeatures}}</li>
                                         <li><span>Parking:</span>{{ParkingFeatures}}</li>
                                     </ul>
                                 </div>
@@ -226,8 +228,8 @@
                                 <div class="tab-cotent-item">
                                     <h6>Community</h6>
                                     <ul>
-                                        <li><span>Gated Community:</span>TBD</li>
-                                        <li><span>Community Amenities:</span>TBD</li>
+                                        <li><span>Gated Community:</span>{{GatedCommunity}}</li>
+                                        <li><span>Community Amenities:</span>{{AreaAmenities}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -238,23 +240,23 @@
                                 <div class="tab-cotent-item">
                                     <h6>Financial Information</h6>
                                     <ul>
-                                        <li><span>HOA Name:</span>TBD</li>
-                                        <li><span>HOA Fee:</span>$TBD</li>
-                                        <li><span>Est Tax:</span>$TBD</li>
-                                        <li><span>Act Tax:</span>$TBD</li>
-                                        <li><span>Tax Year:</span>TBD</li>
-                                        <li><span>Tax Rate: TBD%</span></li>
-                                        <li><span>Exempt: TBD</span></li>
+                                        <li><span>HOA Name:</span>{{HOAName}}</li>
+                                        <li><span>HOA Fee:</span>$ {{AssociationFee|number_format(0, '.', ',')}}</li>
+                                        <li><span>Est Tax:</span>$ {{TaxAmount|number_format(0, '.', ',')}}</li>
+                                        <li><span>Act Tax:</span>$ {{TaxAmount|number_format(0, '.', ',')}}</li>
+                                        <li><span>Tax Year:</span>{{TaxYear}}</li>
+                                        <li><span>Tax Rate: {{TaxRate|number_format(2, '.', ',')}} %</span></li>
+                                        <!--<li><span>Exempt: TBD</span></li>-->
                                     </ul>
                                 </div>
                                 <div class="tab-cotent-item">
                                     <h6>Utility Information</h6>
                                     <ul>
-                                        <li><span>Water:</span>TBD</li>
-                                        <li><span>A/C:</span>TBD</li>
-                                        <li><span>Heat:</span>TBD</li>
-                                        <li><span>Sewer:</span>TBD</li>
-                                        <li><span>Utilities:</span>TBD</li>
+                                        <li><span>Water:</span>{{WaterSource}}</li>
+                                        <li><span>A/C:</span>{{AC}}</li>
+                                        <li><span>Heat:</span>{{Heating}}</li>
+                                        <li><span>Sewer:</span>{{Sewer}}</li>
+                                        <li><span>Utilities:</span>{{Utilities}}</li>
                                     </ul>
                                 </div>
                             </div> 
@@ -270,34 +272,37 @@
                         <div class="additional-info-wrap">
                            <h3>Request Showing or Additional info</h3>
                             <div class="input-wrap">
-                                <form action="#" method="post">
+                                <form action="{{path('detailformrequest')}}" method="post">
+
                                     <div class="input-row">
-                                        <input type="text" value="Your Name">
+                                        <input type="text" value="Your Name" name="name">
                                     </div>
                                     <div class="input-row">
-                                        <input type="text" value="Email">
+                                        <input type="text" value="Email" name="email">
                                     </div>
                                     <div class="input-row">
-                                        <input type="text" value="Phone">
+                                        <input type="text" value="Phone" name="phone">
                                     </div>
                                     <div class="input-row">
-                                        <select class="styled-select" id="get_value">
+                                        <select class="styled-select" id="get_value" name="subj">
                                             <option value="I want to schedule a showing">I want to schedule a showing</option>
                                             <option value="Please Send Me More Info">Please Send Me More Info</option>
                                         </select>
                                     </div>
                                     <div class="input-row date">
-                                        <input type="text" value="Date" class="datepicker">
+                                        <input type="text" value="Date" name="date" class="datepicker">
                                     </div>
                                     <div class="input-row time">
-                                        <input type="text" value="Time">
+                                        <input type="text" value="Time" name="time">
                                     </div>
                                     <div class="input-row">
-                                        <textarea>Comments</textarea>
+                                        <textarea name="comments">Comments</textarea>
                                     </div>
                                     <div class="input-row">
                                         <input type="submit" value="Schedule Showing">
                                     </div>
+                                        <input type="hidden" name="id" value="{{Matrix_Unique_ID}}">
+
                                 </form>
                             </div>
                         </div>
@@ -311,40 +316,44 @@
                          <h3>Similar Properties</h3>
                          <div class="featured-slider-main" id="featured-slider-main">
                              <div class="carousel-slider">
+                                 
+
+
+                                {% for s in simData %}
                                  <div class="slides">
                                      <div class="slide-item-wrap">
                                          <div class="property-slider">
                                              <ul class="slides">
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
+                                                 
+                                        {% if s.images is defined %}
+                                            {% for value in s.images %}
+                                                <li class="slide">
+                                                    <img src="{{ asset('properties/')}}{{value}}" alt="">
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+
                                              </ul>
                                          </div>
                                          <div class="slide-info">
                                              <div class="slide-item-price">
-                                                 <p>$1,750,000</p>
-                                                 <p><span>5</span><span class="small-slide-item-conten">bd</span><span>6.5</span><span class="small-slide-item-conten">ba</span></p>
+                                                 <p>${{s.ListPrice|number_format(0, '.', ',')}}</p>
+                                                 <p><span>{{s.beds}}</span><span class="small-slide-item-conten">bd</span><span>{{s.bath}}{% if s.halfbath > 0 %}.5{% endif %}</span><span class="small-slide-item-conten">ba</span></p>
                                              </div>
                                              <div class="slide-info-details-wrap">
                                                  <div class="slide-info-size">
-                                                     <p>10,200<span>sq ft</span></p>
-                                                     <p>3.22<span>ac</span></p>
-                                                     <p>2012<span>yr built</span></p>
+                                                     <p>{{s.SqftTotal|number_format(0, '.', ',')}}<span>sq ft</span></p>
+                                                     <p>{{s.LotSizeArea}}<span>ac</span></p>
+                                                     <p>{{s.YearBuilt}}<span>yr built</span></p>
                                                  </div>
                                                  <address>
-                                                     <p>246 Barton Hills Dr Austin, TX78738</p>
+                                                     <p>{{s.Address}} {{s.City}}, {{s.StateOrProvince}} {{s.PostalCode}}</p>
                                                      <div class="slide-info-details-btn-wrap">
-                                                         <a href="#"><img src="images/details.gif" alt=""></a>
+                                                         <a href="{{path('details', {'id': s.Matrix_Unique_ID})}}"><img src="{{asset('images/details.gif')}}" alt=""></a>
                                                          <a href="#" class="preview"><img src="{{asset('images/preview.gif')}}" alt=""></a>
                                                      </div>
                                                      <div class="slide-info-details-links-wrap">
-                                                         <span>Barton Creek</span>
+                                                         <span>{{s.SubdivisionName}}</span>
                                                          <div class="slide-info-details-link">
                                                              <a href="#"><img src="{{asset('images/share.gif')}}" alt=""></a>
                                                              <a href="#"><img src="{{asset('images/favorite.gif')}}" alt=""></a>
@@ -355,226 +364,15 @@
                                          </div>
                                      </div>
                                  </div>
-                                 <div class="slides">
-                                     <div class="slide-item-wrap">
-                                         <div class="property-slider">
-                                             <ul class="slides">
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                             </ul>
-                                         </div>
-                                         <div class="slide-info">
-                                             <div class="slide-item-price">
-                                                 <p>$1,750,000</p>
-                                                 <p><span>5</span><span class="small-slide-item-conten">bd</span><span>6.5</span><span class="small-slide-item-conten">ba</span></p>
-                                             </div>
-                                             <div class="slide-info-details-wrap">
-                                                 <div class="slide-info-size">
-                                                     <p>10,200<span>sq ft</span></p>
-                                                     <p>3.22<span>ac</span></p>
-                                                     <p>2012<span>yr built</span></p>
-                                                 </div>
-                                                 <address>
-                                                     <p>246 Barton Hills Dr Austin, TX78738</p>
-                                                     <div class="slide-info-details-btn-wrap">
-                                                         <a href="#"><img src="{{asset('images/details.gif')}}" alt=""></a>
-                                                         <a href="#" class="preview"><img src="{{asset('images/preview.gif')}}" alt=""></a>
-                                                     </div>
-                                                     <div class="slide-info-details-links-wrap">
-                                                         <span>Barton Creek</span>
-                                                         <div class="slide-info-details-link">
-                                                             <a href="#"><img src="{{asset('images/share.gif')}}" alt=""></a>
-                                                             <a href="#"><img src="{{asset('images/favorite.gif')}}" alt=""></a>
-                                                         </div>
-                                                     </div>
-                                                 </address>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="slides">
-                                     <div class="slide-item-wrap">
-                                         <div class="property-slider">
-                                             <ul class="slides">
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                             </ul>
-                                         </div>
-                                         <div class="slide-info">
-                                             <div class="slide-item-price">
-                                                 <p>$1,750,000</p>
-                                                 <p><span>5</span><span class="small-slide-item-conten">bd</span><span>6.5</span><span class="small-slide-item-conten">ba</span></p>
-                                             </div>
-                                             <div class="slide-info-details-wrap">
-                                                 <div class="slide-info-size">
-                                                     <p>10,200<span>sq ft</span></p>
-                                                     <p>3.22<span>ac</span></p>
-                                                     <p>2012<span>yr built</span></p>
-                                                 </div>
-                                                 <address>
-                                                     <p>246 Barton Hills Dr Austin, TX78738</p>
-                                                     <div class="slide-info-details-btn-wrap">
-                                                         <a href="#"><img src="{{asset('images/details.gif')}}" alt=""></a>
-                                                         <a href="#" class="preview"><img src="{{asset('images/preview.gif')}}" alt=""></a>
-                                                     </div>
-                                                     <div class="slide-info-details-links-wrap">
-                                                         <span>Barton Creek</span>
-                                                         <div class="slide-info-details-link">
-                                                             <a href="#"><img src="{{asset('images/share.gif')}}" alt=""></a>
-                                                             <a href="#"><img src="{{asset('images/favorite.gif')}}" alt=""></a>
-                                                         </div>
-                                                     </div>
-                                                 </address>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="slides">
-                                     <div class="slide-item-wrap">
-                                         <div class="property-slider">
-                                             <ul class="slides">
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                             </ul>
-                                         </div>
-                                         <div class="slide-info">
-                                             <div class="slide-item-price">
-                                                 <p>$1,750,000</p>
-                                                 <p><span>5</span><span class="small-slide-item-conten">bd</span><span>6.5</span><span class="small-slide-item-conten">ba</span></p>
-                                             </div>
-                                             <div class="slide-info-details-wrap">
-                                                 <div class="slide-info-size">
-                                                     <p>10,200<span>sq ft</span></p>
-                                                     <p>3.22<span>ac</span></p>
-                                                     <p>2012<span>yr built</span></p>
-                                                 </div>
-                                                 <address>
-                                                     <p>246 Barton Hills Dr Austin, TX78738</p>
-                                                     <div class="slide-info-details-btn-wrap">
-                                                         <a href="#"><img src="images/details.gif" alt=""></a>
-                                                         <a href="#" class="preview"><img src="{{asset('images/preview.gif')}}" alt=""></a>
-                                                     </div>
-                                                     <div class="slide-info-details-links-wrap">
-                                                         <span>Barton Creek</span>
-                                                         <div class="slide-info-details-link">
-                                                             <a href="#"><img src="{{asset('images/share.gif')}}" alt=""></a>
-                                                             <a href="#"><img src="{{asset('images/favorite.gif')}}" alt=""></a>
-                                                         </div>
-                                                     </div>
-                                                 </address>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="slides">
-                                     <div class="slide-item-wrap">
-                                         <div class="property-slider">
-                                             <ul class="slides">
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                             </ul>
-                                         </div>
-                                         <div class="slide-info">
-                                             <div class="slide-item-price">
-                                                 <p>$1,750,000</p>
-                                                 <p><span>5</span><span class="small-slide-item-conten">bd</span><span>6.5</span><span class="small-slide-item-conten">ba</span></p>
-                                             </div>
-                                             <div class="slide-info-details-wrap">
-                                                 <div class="slide-info-size">
-                                                     <p>10,200<span>sq ft</span></p>
-                                                     <p>3.22<span>ac</span></p>
-                                                     <p>2012<span>yr built</span></p>
-                                                 </div>
-                                                 <address>
-                                                     <p>246 Barton Hills Dr Austin, TX78738</p>
-                                                     <div class="slide-info-details-btn-wrap">
-                                                         <a href="#"><img src="{{asset('images/details.gif')}}" alt=""></a>
-                                                         <a href="#" class="preview"><img src="{{asset('images/preview.gif')}}" alt=""></a>
-                                                     </div>
-                                                     <div class="slide-info-details-links-wrap">
-                                                         <span>Barton Creek</span>
-                                                         <div class="slide-info-details-link">
-                                                             <a href="#"><img src="{{asset('images/share.gif')}}" alt=""></a>
-                                                             <a href="#"><img src="{{asset('images/favorite.gif')}}" alt=""></a>
-                                                         </div>
-                                                     </div>
-                                                 </address>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-                                 <div class="slides">
-                                     <div class="slide-item-wrap">
-                                         <div class="property-slider">
-                                             <ul class="slides">
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                                 <li class="slide">
-                                                     <img src="{{asset('images/property-image-size.jpg')}}" alt="">
-                                                 </li>
-                                             </ul>
-                                         </div>
-                                         <div class="slide-info">
-                                             <div class="slide-item-price">
-                                                 <p>$1,750,000</p>
-                                                 <p><span>5</span><span class="small-slide-item-conten">bd</span><span>6.5</span><span class="small-slide-item-conten">ba</span></p>
-                                             </div>
-                                             <div class="slide-info-details-wrap">
-                                                 <div class="slide-info-size">
-                                                     <p>10,200<span>sq ft</span></p>
-                                                     <p>3.22<span>ac</span></p>
-                                                     <p>2012<span>yr built</span></p>
-                                                 </div>
-                                                 <address>
-                                                     <p>246 Barton Hills Dr Austin, TX78738</p>
-                                                     <div class="slide-info-details-btn-wrap">
-                                                         <a href="#"><img src="{{asset('images/details.gif')}}" alt=""></a>
-                                                         <a href="#" class="preview"><img src="{{asset('images/preview.gif')}}" alt=""></a>
-                                                     </div>
-                                                     <div class="slide-info-details-links-wrap">
-                                                         <span>Barton Creek</span>
-                                                         <div class="slide-info-details-link">
-                                                             <a href="#"><img src="{{asset('images/share.gif')}}" alt=""></a>
-                                                             <a href="#"><img src="{{asset('images/favorite.gif')}}" alt=""></a>
-                                                         </div>
-                                                     </div>
-                                                 </address>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
+                                {% endfor %}
+                                 
+
+
+
+
+
+
+
                              </div>
                          </div>
                      </div>
@@ -595,8 +393,8 @@
                 <div class="property-content-area">
                     <div class="propery-content-area-inner">
                         <p>Porperty listed by Engel &amp; Volkers Austin</p>
-                        <p>Disclaimer: All property information on this website is deemed reliable but is not guaranteed and should not be relied upon without indenpendent verfication.Properties are subject to prior sale, change or withdrawal. Neither listing broker nor TheAustinMlSSearch.com shall be responsible for any misinformation, misprints, or typographical errors, and shall be held totally harmless. The data relating to properties for sale on this website is provided by the <a href="#">Austin Board of Realtors</a>.Database last updated 03/24/2017 at 10.02 Am</p>
-                        <p>While you area able to search MLS listings in Austin through this online, it is not the offcial MLS that real estate agents have access to through the Austin Board of Realtors. Access to the official Austin MLS only granted to licensed Realtors. <br> <a href="#">Learn more</a></p>
+                        <p>Disclaimer: All property information on this website is deemed reliable but is not guaranteed and should not be relied upon without indenpendent verfication.Properties are subject to prior sale, change or withdrawal. Neither listing broker nor TheAustinMlSSearch.com shall be responsible for any misinformation, misprints, or typographical errors, and shall be held totally harmless. The data relating to properties for sale on this website is provided by the <a href="https://www.abor.com/" target="_blank">Austin Board of Realtors</a>.Database last updated {{today_date}}</p>
+                        <p>While you area able to search MLS listings in Austin through this online, it is not the offcial MLS that real estate agents have access to through the Austin Board of Realtors. Access to the official Austin MLS only granted to licensed Realtors. <br> <a href="https://www.freeaustinmlssearch.com/austin-mls" target="_blank">Learn more about the Austin MLS</a></p>
                     </div>
                 </div>
                 <!-- End property content area -->

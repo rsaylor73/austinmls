@@ -63,7 +63,27 @@ class GetPropertiesCommand extends ContainerAwareCommand
 	        	$Flooring = "";
 	        	$Flooring = $properties->Flooring;
 	        	$Flooring = str_replace("'"," - ",$Flooring);
-	        		     
+	        		    
+                        $Construction = "";
+                        $Construction = $properties->Construction;
+                        $Construction = str_replace("'","`",$Construction);
+
+                        $BuilderName = "";
+                        $BuilderName = $properties->BuilderName;
+                        $BuilderName = str_replace("'","`",$BuilderName);
+
+			$InteriorFeatures = "";
+			$InteriorFeatures = $properties->InteriorFeatures;
+			$InteriorFeatures = str_replace("'","`",$InteriorFeatures);
+
+                        $HOAName = "";
+                        $HOAName = $properties->HOAName;
+                        $HOAName = str_replace("'","`",$HOAName);
+
+			$PublicRemarks = "";
+			$PublicRemarks = $properties->PublicRemarks;
+			$PublicRemarks = str_replace("'","`",$PublicRemarks); 
+ 
 	        	$sql = "INSERT INTO `properties`
 	        	(
 	        	`Matrix_Unique_ID`,
@@ -149,7 +169,13 @@ class GetPropertiesCommand extends ContainerAwareCommand
 	        	`View`,
 	        	`Waterfront`,
 	        	`WaterfrontDescription`,
-	        	`WaterSource`
+	        	`WaterSource`,
+	        	`ListingContractDate`,
+	        	`Heating`,
+	        	`Sewer`,
+	        	`AC`,
+	        	`CurrentPrice`,
+	        	`LastListPrice`
 	        	) VALUES (
 	        	'$properties->Matrix_Unique_ID',
 	        	'$properties->Latitude',
@@ -202,8 +228,8 @@ class GetPropertiesCommand extends ContainerAwareCommand
 				'$properties->Area',
 				'$properties->AreaAmenities',
 				'$properties->AssociationFee',
-				'$properties->BuilderName',
-				'$properties->Construction',
+				'$BuilderName',
+				'$Construction',
 				'$properties->CountyOrParish',
 				'$properties->DiningDescription',
 				'$properties->DisabilityFeatures',
@@ -212,8 +238,8 @@ class GetPropertiesCommand extends ContainerAwareCommand
 				'$properties->ForeclosureREO',
 				'$properties->FoundationDetails',
 				'$properties->GatedCommunity',
-				'$properties->HOAName',
-				'$properties->InteriorFeatures',
+				'$HOAName',
+				'$InteriorFeatures',
 				'$properties->KitchenAppliances',
 				'$properties->LaundryFacilities',
 				'$properties->LaundryLocation',
@@ -222,7 +248,7 @@ class GetPropertiesCommand extends ContainerAwareCommand
 				'$properties->MasterMain',
 				'$properties->NumFireplaces',
 				'$properties->NumLiving',
-				'$properties->PublicRemarks',
+				'$PublicRemarks',
 				'$properties->Roof',
 				'$properties->Rooms',
 				'$properties->SpaHotTubYN',
@@ -234,7 +260,13 @@ class GetPropertiesCommand extends ContainerAwareCommand
 				'$properties->View',
 				'$properties->Waterfront',
 				'$properties->WaterfrontDescription',
-				'$properties->WaterSource'
+				'$properties->WaterSource',
+				'$properties->ListingContractDate',
+				'$properties->Heating',
+				'$properties->Sewer',
+				'$properties->AC',
+				'$properties->CurrentPrice',
+	        	'$properties->LastListPrice'
 	        	)
 	        	";
 				$query = $em->getConnection()->prepare($sql);
@@ -287,6 +319,26 @@ class GetPropertiesCommand extends ContainerAwareCommand
 	        	$Flooring = $properties->Flooring;
 	        	$Flooring = str_replace("'"," - ",$Flooring);
 
+			$Construction = "";
+			$Construction = $properties->Construction;
+			$Construction = str_replace("'","`",$Construction);
+
+			$BuilderName = "";
+			$BuilderName = $properties->BuilderName;
+			$BuilderName = str_replace("'","`",$BuilderName);
+
+                        $InteriorFeatures = "";
+                        $InteriorFeatures = $properties->InteriorFeatures;
+                        $InteriorFeatures = str_replace("'","`",$InteriorFeatures);
+
+						$HOAName = "";
+						$HOAName = $properties->HOAName;
+						$HOAName = str_replace("'","`",$HOAName);
+
+                        $PublicRemarks = "";
+                        $PublicRemarks = $properties->PublicRemarks;
+                        $PublicRemarks = str_replace("'","`",$PublicRemarks);
+
 	        	$sql = "UPDATE `properties` SET
 	        	`Latitude` = '$properties->Latitude',
 	        	`Longitude` = '$properties->Longitude',
@@ -337,8 +389,8 @@ class GetPropertiesCommand extends ContainerAwareCommand
 				`Area` = '$properties->Area',
 				`AreaAmenities` = '$properties->AreaAmenities',
 				`AssociationFee` = '$properties->AssociationFee',
-				`BuilderName` = '$properties->BuilderName',
-				`Construction` = '$properties->Construction',
+				`BuilderName` = '$BuilderName',
+				`Construction` = '$Construction',
 				`CountyOrParish` = '$properties->CountyOrParish',
 				`DiningDescription` = '$properties->DiningDescription',
 				`ExteriorFeatures` = '$properties->ExteriorFeatures',
@@ -346,8 +398,8 @@ class GetPropertiesCommand extends ContainerAwareCommand
 				`ForeclosureREO` = '$properties->ForeclosureREO',
 				`FoundationDetails` = '$properties->FoundationDetails',
 				`GatedCommunity` = '$properties->GatedCommunity',
-				`HOAName` = '$properties->HOAName',
-				`InteriorFeatures` = '$properties->InteriorFeatures',
+				`HOAName` = '$HOAName',
+				`InteriorFeatures` = '$InteriorFeatures',
 				`KitchenAppliances` = '$properties->KitchenAppliances',
 				`LaundryFacilities` = '$properties->LaundryFacilities',
 				`LaundryLocation` = '$properties->LaundryLocation',
@@ -356,7 +408,7 @@ class GetPropertiesCommand extends ContainerAwareCommand
 				`MasterMain` = '$properties->MasterMain',
 				`NumFireplaces` = '$properties->NumFireplaces',
 				`NumLiving` = '$properties->NumLiving',
-				`PublicRemarks` = '$properties->PublicRemarks',
+				`PublicRemarks` = '$PublicRemarks',
 				`Roof` = '$properties->Roof',
 				`Rooms` = '$properties->Rooms',
 				`SpaHotTubYN` = '$properties->SpaHotTubYN',
@@ -368,7 +420,13 @@ class GetPropertiesCommand extends ContainerAwareCommand
 				`View` = '$properties->View',
 				`Waterfront` = '$properties->Waterfront',
 				`WaterfrontDescription` = '$properties->WaterfrontDescription',
-				`WaterSource` = '$properties->WaterSource'
+				`WaterSource` = '$properties->WaterSource',
+				`ListingContractDate` = '$properties->ListingContractDate',
+				`Heating` = '$properties->Heating',
+				`Sewer` = '$properties->Sewer',
+				`AC` = '$properties->AC',
+				`CurrentPrice` = '$properties->CurrentPrice',
+				`LastListPrice` = '$properties->LastListPrice'
 
 	        	WHERE `Matrix_Unique_ID` = '$properties->Matrix_Unique_ID'
 	        	";
@@ -410,27 +468,7 @@ class GetPropertiesCommand extends ContainerAwareCommand
         $results = $rets->Search("Property", "RESI", "(city=|$city)",
                 array(
                     "Limit" => $limit, 
-                    "Select" => "Matrix_Unique_ID,Latitude,Longitude,ListPrice,Address,City,
-                    StateOrProvince,PostalCode,NumMainLevelBeds,NumOtherLevelBeds,BathsHalf,
-                    NumGuestHalfBaths,NumGuestFullBaths,BathsFull,SqftTotal,LotSizeArea,
-                    YearBuilt,CoveredSpaces,SubdivisionName,MLSNumber,GarageDescription,
-                    Latitude,Longitude,Status,Gr9HighSchool,JuniorHighSchool,
-                    MiddleIntermediateSchool,SchoolDistrict,SeniorHighSchool,ElementaryA,
-                    BedsTotal,BodyofWater,Fence,FireplaceFeatures,Flooring,GarageDescription,
-                    IsDeleted,LandSQFT,LastStatus,NumParkingSpaces,OpenHouseUpcoming,
-                    OpenHouseDatePublic,OpenHouseTimePublic,ParkingFeatures,PoolonProperty,
-                    PropertySubType,PropertyType,WaterAccess,StoriesLookup,
-                    ActualTax,Area,AreaAmenities,AssociationFee,BuilderName,Construction,
-                    CountyOrParish,DiningDescription,DisabilityFeatures,ExteriorFeatures,
-                    Faces,ForeclosureREO,FoundationDetails,GatedCommunity,
-                    HOAName,InteriorFeatures,KitchenAppliances,LaundryFacilities,
-                    LaundryLocation,LotFeatures,MasterDescription,MasterMain,
-                    NumFireplaces,NumLiving,PublicRemarks,Roof,Rooms,SpaHotTubYN,
-                    Steps,TaxAmount,TaxRate,TaxYear,Utilities,View,Waterfront,
-                    WaterfrontDescription,WaterSource
-
-
-					"
+"Select" => "Matrix_Unique_ID,Latitude,Longitude,ListPrice,Address,City,StateOrProvince,PostalCode,NumMainLevelBeds,NumOtherLevelBeds,BathsHalf,NumGuestHalfBaths,NumGuestFullBaths,BathsFull,SqftTotal,LotSizeArea,YearBuilt,CoveredSpaces,SubdivisionName,MLSNumber,GarageDescription,Latitude,Longitude,Status,Gr9HighSchool,JuniorHighSchool,MiddleIntermediateSchool,SchoolDistrict,SeniorHighSchool,ElementaryA,BedsTotal,BodyofWater,Fence,FireplaceFeatures,Flooring,GarageDescription,IsDeleted,LandSQFT,LastStatus,NumParkingSpaces,OpenHouseUpcoming,OpenHouseDatePublic,OpenHouseTimePublic,ParkingFeatures,PoolonProperty,PropertySubType,PropertyType,WaterAccess,StoriesLookup,ActualTax,Area,AreaAmenities,AssociationFee,BuilderName,Construction,CountyOrParish,DiningDescription,DisabilityFeatures,ExteriorFeatures,Faces,ForeclosureREO,FoundationDetails,GatedCommunity,HOAName,InteriorFeatures,KitchenAppliances,LaundryFacilities,LaundryLocation,LotFeatures,MasterDescription,MasterMain,NumFireplaces,NumLiving,PublicRemarks,Roof,Rooms,SpaHotTubYN,Steps,TaxAmount,TaxRate,TaxYear,Utilities,View,Waterfront,WaterfrontDescription,WaterSource,ListingContractDate,Heating,Sewer,AC,CurrentPrice,LastListPrice"
                 )); 
         return($results);           	
     }

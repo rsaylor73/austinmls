@@ -565,14 +565,14 @@
                             <section class="sign-up-section" id="login-section">
                                 <span class="first-title">Login</span>
                                 <div class="input-wrap">
-                                    <form action="#" method="post">
+                                    <form action="{{path('userlogin')}}" method="post">
                                         <p>Don't have an account?<a href="#" class="register-here">Register Here</a></p>
                                         <div class="login-info">
                                             <div class="input-row">
-                                                <input type="text" value="Email" class="transparent-btn">
+                                                <input type="text" name="email" value="Email" class="transparent-btn">
                                             </div>
                                             <div class="input-row ">
-                                                <input type="text" value="Password" class="transparent-btn">
+                                                <input type="password" name="password" value="Password" class="transparent-btn">
                                             </div>
                                             <div class="submit-btn">
                                                 <input type="submit" value="Login" class="navy-blue-btn">
@@ -598,26 +598,26 @@
                             <section class="sign-up-section register" id="register-section">
                                 <span class="first-title">Register</span>
                                 <div class="input-wrap">
-                                    <form action="#" method="post">
+                                    <form action="{{path('saveuser')}}" method="post">
                                         <p>Already have an account?<a href="#" class="login-here">Login Here</a></p>
                                         <div class="login-info">
                                             <div class="input-row">
-                                                <input type="text" value="First Name" class="transparent-btn">
+                                                <input type="text" name="first" value="First Name" class="transparent-btn">
                                             </div>
                                             <div class="input-row ">
-                                                <input type="text" value="Last Name" class="transparent-btn">
+                                                <input type="text" name="last" value="Last Name" class="transparent-btn">
                                             </div>
                                             <div class="input-row">
-                                                <input type="text" value="Email" class="transparent-btn">
+                                                <input type="text" name="email" value="Email" class="transparent-btn">
                                             </div>
                                             <div class="input-row ">
-                                                <input type="text" value="Phone" class="transparent-btn">
+                                                <input type="text" name="phone" value="Phone" class="transparent-btn">
                                             </div>
                                             <div class="input-row">
-                                                <input type="text" value="Password" class="transparent-btn">
+                                                <input type="password" name="password" value="Password" class="transparent-btn">
                                             </div>
                                             <div class="input-row ">
-                                                <input type="text" value="Repeat Password" class="transparent-btn">
+                                                <input type="password" name="password2" value="Repeat Password" class="transparent-btn">
                                             </div>
                                             <div class="submit-btn">
                                                 <input type="submit" value="Create Your Free Account" class="navy-blue-btn">
@@ -653,4 +653,5 @@
 
                 </section>
                 <!-- //End main section -->
+{% include('flash-messages.html.twig') %}
 {% endblock %}
