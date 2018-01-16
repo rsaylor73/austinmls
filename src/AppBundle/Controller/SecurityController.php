@@ -87,4 +87,17 @@ class SecurityController extends Controller
 
     }
 
+    /**   
+     * @Route("/userlogout", name="userlogout")
+     */
+    public function userlogoutAction(Request $request)
+    {
+
+        $session = $this->get('commonservices')->GetSessionData();
+        $session->clear();
+
+        $this->addFlash('info','You have been logged out.');
+        return $this->redirectToRoute('homepage'); 
+
+    }
 }

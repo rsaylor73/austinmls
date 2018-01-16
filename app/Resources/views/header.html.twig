@@ -557,8 +557,13 @@
                         </div>
                         <div class="login-and-signup-section">
                             <div class="login-wrap">
-                                <a href="#" id="login">Login</a>
-                                <a href="#" id="register">Register</a>
+                                {% if app.session.get('email') %}
+                                    <a href="{{path('userlogout')}}" id="logout">Logout</a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                {% else %}
+                                    <a href="#" id="login">Login</a>
+                                    <a href="#" id="register">Register</a>
+                                {% endif %}
                             </div>
                             <!-- Begin sign up popup section 
                             =============================== -->
