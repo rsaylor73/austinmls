@@ -26,3 +26,7 @@ parameters:
 
     GOOGLE_API: google_api
     image_path: /usr/home/dir
+
+    site_url: http://www.domain.com/
+    site_name: Your Name
+    site_email: you@domain.com
