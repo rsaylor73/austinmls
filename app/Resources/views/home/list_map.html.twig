@@ -48,8 +48,10 @@
                    </div>
                 </div>
                 <div class="search-return-title">
-                    <h3>Your Search Returned 10,480 Results</h3>
-                    <p>Please use the search options above to narrow your search results</p>
+                    
+                    <p>Please use the search options above to narrow your search results.&nbsp;
+                    <input type="button" value="Save Search" class="btn btn-success"
+                    onclick="document.location.href='{{path('savesearch', {'s':'1','p':params|url_encode,'r':records})}}'"></p>
                 </div>
                 <div class="email-receive">
                     <div class="recevie-btn">

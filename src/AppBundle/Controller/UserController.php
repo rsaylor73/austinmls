@@ -204,5 +204,142 @@ class UserController extends Controller
 
         $this->addFlash('success','The property has been removed to your favorites.');
         return $this->redirectToRoute('myfavorite'); 
-    }               
+    }  
+
+    /**   
+     * @Route("/savesearch", name="savesearch")
+     */
+    public function savesearchAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('commonservices')->GetSessionData();
+        $id = $session->get('id');
+        $params = $request->query->get('p');
+        $records = $request->query->get('r');
+
+        if(!isset($id)) {
+            $this->addFlash('danger',"Your session has expired. Please log back in.");
+            return $this->redirectToRoute('homepage');
+        }
+
+        $date_formatted = date("m/d/Y g:i a");
+        $date = date("Ymd");
+        $title = "Saved Search $date_formatted";
+
+        $params = urldecode($params);
+        $sql = "INSERT INTO `saved_search` (`userID`,`title`,`date`,`link`,`records`) VALUES 
+        ('$id','$title','$date','$params','$records')";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+
+        $this->addFlash('success','Your saved search has been saved. You can access your saved search in your dashboard.');
+        return $this->redirectToRoute('homepage'); 
+    } 
+
+    /**   
+     * @Route("/listsavesearch", name="listsavesearch")
+     */
+    public function listsavesearchAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('commonservices')->GetSessionData();
+        $id = $session->get('id');
+
+        if(!isset($id)) {
+            $this->addFlash('danger',"Your session has expired. Please log back in.");
+            return $this->redirectToRoute('homepage');
+        }
+
+        $sql = "SELECT `id`,`title`,`link` FROM `saved_search` WHERE `userID` = '$id'";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        $i = "0";
+        while ($row = $result->fetch()) {
+            foreach ($row as $key=>$value) {
+                $data[$i][$key] = $value;
+            }
+            $i++;
+        }
+
+        return $this->render('user/listsavesearch.html.twig',[
+            'data' => $data,
+        ]);
+    }
+
+    /**   
+     * @Route("/editsavesearch", name="editsavesearch")
+     */
+    public function editsavesearchAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('commonservices')->GetSessionData();
+        $id = $session->get('id');
+        $id2 = $request->query->get('id');
+
+        if(!isset($id)) {
+            $this->addFlash('danger',"Your session has expired. Please log back in.");
+            return $this->redirectToRoute('homepage');
+        }
+
+        $sql = "SELECT `id`,`title`,`link` FROM `saved_search` WHERE `userID` = '$id' AND `id` = '$id2'";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        $title = "";
+        while ($row = $result->fetch()) {
+            $title = $row['title'];
+        }
+
+        return $this->render('user/editsavesearch.html.twig',[
+            'title' => $title,
+            'id' => $id2,
+        ]);
+
+    }
+
+    /**   
+     * @Route("/updatesavesearch", name="updatesavesearch")
+     */
+    public function updatesavesearchAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('commonservices')->GetSessionData();
+        $id = $session->get('id');
+        $id2 = $request->request->get('id');
+        $title = $request->request->get('title');
+
+        if(!isset($id)) {
+            $this->addFlash('danger',"Your session has expired. Please log back in.");
+            return $this->redirectToRoute('homepage');
+        }
+
+        $sql = "UPDATE `saved_search` SET `title` = '$title' WHERE `id` = '$id2' AND `userID` = '$id'";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+
+        $this->addFlash('success',"Your saved search was updated.");
+        return $this->redirectToRoute('listsavesearch');
+    }
+
+    /**   
+     * @Route("/deletesavesearch", name="deletesavesearch")
+     */
+    public function deletesavesearchAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('commonservices')->GetSessionData();
+        $id = $session->get('id');
+        $id2 = $request->query->get('id');
+
+        if(!isset($id)) {
+            $this->addFlash('danger',"Your session has expired. Please log back in.");
+            return $this->redirectToRoute('homepage');
+        }
+
+        $sql = "DELETE FROM `saved_search` WHERE `id` = '$id2' AND `userID` = '$id'";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+
+        $this->addFlash('success',"Your saved search was removed.");
+        return $this->redirectToRoute('listsavesearch');
+    }
 }

@@ -66,7 +66,7 @@ class SecurityController extends Controller
 
         $session = $this->get('commonservices')->GetSessionData();
 
-        $sql = "SELECT `id`,`first`,`last`,`email`,`phone`,`password` FROM `users`
+        $sql = "SELECT `id`,`first`,`last`,`email`,`phone`,`password`,`userType` FROM `users`
         WHERE `email` = '$email' AND `active` = 'Yes' LIMIT 1";
         $result = $em->getConnection()->prepare($sql);
         $result->execute();

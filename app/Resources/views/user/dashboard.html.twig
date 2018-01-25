@@ -5,7 +5,7 @@
 
 {% block body %}
 
-
+	{% set userType = app.session.get('userType') %}
 
 	<div class="row top-buffer">
 		<div class="col-sm-12">
@@ -34,12 +34,24 @@
 
 	    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
 	        <div class="div-square">
-	            <a href="#" >
+	            <a href="{{path('listsavesearch')}}" >
 	            <i class="fa fa-search fa-5x"></i><br>
 	            <h4>My Searchs</h4>
 	            </a>
 	        </div>            
 	    </div>
+
+		{% if userType == "admin" %}
+	    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+	        <div class="div-square">
+	            <a href="#" >
+	            <i class="fa fa-lock fa-5x"></i><br>
+	            <h4>Admin</h4>
+	            </a>
+	        </div>            
+	    </div>
+		{% endif %}
+
 	</div>
 
 

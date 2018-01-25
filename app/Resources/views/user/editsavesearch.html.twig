@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+	{% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+	<div class="row top-buffer">
+		<div class="col-sm-12">
+			<h3>My Saved Search</h3>
+		</div>
+	</div>
+	{% include('flash-messages.html.twig') %}
+
+	<form action="{{path('updatesavesearch')}}" method="post">
+	<input type="hidden" name="id" value="{{id}}">
+	<div class="row top-buffer">
+		<div class="col-sm-3">Title:</div>
+		<div class="col-sm-6">
+			<input type="text" name="title" value="{{title}}" class="form-control">
+		</div>
+	</div>
+
+	<div class="row top-buffer">
+		<div class="col-sm-9">
+			<input type="submit" value="Save" class="btn btn-success">&nbsp;
+			<input type="button" value="Cancel" class="btn btn-warning" onclick="document.location.href='{{path('listsavesearch')}}'">
+		</div>
+	</div>
+	</form>
+
+
+<br><br><br><br><br><br>
+
+{% endblock %}
+
+{% block footer %}
+	{% include('footer.html.twig') %}
+{% endblock %}
