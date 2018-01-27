@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+	{% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+	{% set userType = app.session.get('userType') %}
+
+	<div class="row top-buffer">
+		<div class="col-sm-12">
+			<h3>Manage Users</h3>
+		</div>
+	</div>
+
+	<div class="row top-buffer">
+		<div class="col-sm-12">
+			<table class="table table-striped" id="myTable">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Phone</th>
+						<th>Type</th>
+						<th>Active</th>
+						<th>Date Registered</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for d in data %}
+					<tr>
+						<td>{{d.first}} {{d.last}}</td>
+						<th>{{d.phone}}</th>
+						<td>{{d.userType}}</td>
+						<td>{{d.active}}</td>
+						<td>{{d.date}}</td>
+						<td>
+							<input type="button" value="Edit" class="btn btn-primary">&nbsp;
+							<input type="button" value="Delete" class="btn btn-danger"
+							onclick="if(confirm('You are about to delete {{d.first}} {{d.last}}. Click OK to continue.')) { document.location.href='' }">
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+<br><br><br><br><br><br>
+
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable({
+      "aaSorting": []
+    });
+});
+</script>
+
+
+{% endblock %}
+
+{% block footer %}
+	{% include('footer.html.twig') %}
+{% endblock %}
