@@ -69,16 +69,16 @@
                                 <div class="property-slider">
                                     <ul class="slides">
 
-
+<!--
                                         {% if p.images is defined %}
                                             {% for value in p.images %}
                                                 <li class="slide">
                                                     <img src="{{ asset('properties/')}}{{value}}" alt="">
                                                 </li>
                                             {% endfor %}
-                                        {% endif %}
+                                        {% endif %}-->
 
-                                        <!--
+                                        
                                         <li class="slide">
                                             <img src="{{asset('images/property-image-size.jpg')}}" alt="">
                                         </li>
@@ -88,7 +88,7 @@
                                         <li class="slide">
                                             <img src="{{asset('images/property-image-size.jpg')}}" alt="">
                                         </li>
-                                        -->
+                                        
                                     </ul>
                                 </div>
                                 <div class="slide-info">
@@ -123,9 +123,9 @@
                             {% endfor %}
 
 
-                            <div class="pagination-of-pricing">
+                            <!--<div class="pagination-of-pricing">
                             {{ paginate | replace({'WEBAPP': path(url)}) | raw }}
-                            </div>
+                            </div>-->
 
 
                         </div>
@@ -133,7 +133,7 @@
                         <!-- Begin gallery map
                         ======================= -->
 
-
+                        <div class="gallery-map-wrap">
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8BZnjFrejZosG6L6VSsys5tgTbZ2BEhQ"></script>
 <script type="text/javascript">
@@ -210,9 +210,15 @@
         }
     }
 </script>
-<div id="dvMap" class="gallery-map-wrap" style="width: 800px; height: 1120px"></div>
+<div id="dvMap" class="gallery-map-wrap" style="width: 800px; height: 820px"></div>
 
+                        </div>
+                        
+                        <div class="pagination-of-pricing">
+                            {{ paginate | replace({'WEBAPP': path(url)}) | raw }}
 
+                            <!--<div id="pagination"></div>-->
+                        </div>
                         <!-- End Begin galler map -->
                     </div>
 

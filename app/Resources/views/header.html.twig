@@ -39,7 +39,13 @@
                ================================= -->
                 <section class="header-wrap">
                     <div class="logo-wrap">
-                        <div class="main-logo"><a href="{{ path('homepage') }}"><img src="{{ asset('images/free-austin-mls-logo.png') }}" alt=""></a></div>
+                        <!--<div class="main-logo"><a href="{{ path('homepage') }}"><img src="{{ asset('images/free-austin-mls-logo.png') }}" alt=""></a></div>-->
+                        <div class="main-logo">
+                            <a href="{{ path('homepage') }}">
+                                <div class="logo-icon"><img src="{{ asset('images/logo-png.png') }}" alt=""></div>
+                                <h3><b>Free</b> Austin <b>MLS</b> Search<b>.</b>com<span>Search MLS Listings in Austin, TX!</span></h3>
+                            </a>
+                        </div>
                         <div class="mobi-nav">
                             <div></div>
                             <div></div>
@@ -154,7 +160,7 @@
                                                     <ul class="price-and-size-deals">
                                                         <li>
                                                             <div class="price-and-size">
-                                                                <div class="price-info">
+                                                               <!-- <div class="price-info">
                                                                     <div class="pricingrange-bar">
                                                                         <div id = "pricingRange"></div>
                                                                     </div>
@@ -168,8 +174,13 @@
 
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                </div>-->
                                                                 <div class="size-info">
+                                                                    <div class="size-row">
+                                                                        <label>Price</label>
+                                                                        <input type="number" placeholder="min" name="pricemin" class="light-gray">
+                                                                        <input type="number" placeholder="max" name="pricemax" class="light-gray">
+                                                                    </div>
                                                                     <div class="size-row">
                                                                         <label>Bedrooms</label>
                                                                         <input type="number" placeholder="min" name="bedmin" class="light-gray">

@@ -3,8 +3,8 @@
 	$(function(){
 
 		// Begin input common focus and blur for value.
-		$('input:text,input:password,textarea').focus(function(){if(this.value==this.defaultValue){this.value=''}})
-		$('input:text,input:password,textarea').blur(function(){if(!this.value){this.value=this.defaultValue;}})
+		$('input:text,input:password,input[type="email"],textarea').focus(function(){if(this.value==this.defaultValue){this.value=''}})
+        $('input:text,input:password, input[type="email"],textarea').blur(function(){if(!this.value){this.value=this.defaultValue;}})
 		// Ends input common focus and blur for value.
 		
         $('#tab-item li').eq(0).addClass('active')
@@ -222,13 +222,19 @@
             
             e.stopPropagation()
 
-            $('body').bind('click touchend',function(){
+            $('body').bind('click touchend',function(e){
+                e.preventDefault();
                 $("body").removeClass('showPopup')
-                $(".property-inner").click(function(e){
-                    e.stopPropagation()
-                })
+                
             })
-            
+           
+        })
+        $(".feature-content span").bind('click touchend',function(e){
+            e.stopPropagation()
+            $("body").removeClass('showPopup')
+        })
+        $(".property-inner").bind('click touchend',function(e){
+            e.stopPropagation()
         })
 
            
@@ -287,7 +293,33 @@
         });
 
 
+        //connectbtn popup
+
+        $("a.connet-btn").bind('click touchend', function(e){
+            e.stopPropagation();
+            e.preventDefault()
+            $(".connect-wrap").fadeIn();
+            $('body').addClass('bodyfixed');
+        })
         
+        $('body').bind('click touchend',function(){
+            $(".connect-wrap").fadeOut();
+            $('body').removeClass('bodyfixed');
+       })
+        $(".connect-inner-wrap").bind('click touchend',function(e){
+            e.stopPropagation();
+        })
+        //connectbtn popup
+        
+        
+        $('.input-text input:text,.input-text input:password, .input-text input[type="email"],.input-text textarea').keyup(function(){
+            $(this).parent().addClass('value-added');  
+        })
+        $('.input-text input:text,.input-text input:password, .input-text input[type="email"],.input-text textarea').blur(function () {
+            if (this.value == this.defaultValue) {
+                $(this).parent().removeClass('value-added');  
+            }
+        });
         
 	})// End ready function.
 	
@@ -318,6 +350,8 @@
         })
 
     })
+    
+   
 	
 })(jQuery)
 

@@ -68,7 +68,8 @@
                <div id="property_container"> <!-- Ajax Results -->
                <div class="address-top-deals">
                     <div class="address-thumb">
-                        <figure><img src="{{asset('properties')}}\{{ images }}" alt=""></figure>
+                        <!--<figure><img src="{{asset('properties')}}\{{ images }}" alt=""></figure>-->
+                        <figure><img src="{{ asset('images/address-thumb.png') }}" alt=""></figure>
                         <div class="slide-item-price">
                             <p>$ {{ ListPrice|number_format(2, '.', ',') }}</p>
                             <p><span>{{ beds }}</span><span class="small-slide-item-conten">bd</span>
@@ -79,7 +80,7 @@
                         <div class="address-title">
                             {{ Address }} <br>{{ City }}, {{ StateOrProvince }} {{ PostalCode }}
                         </div>
-                        <div class="address-deals">
+                        <!--<div class="address-deals">
                             <div class="address-size">
                             <div><span>Sq Ft:</span><dfn>{{ SqftTotal|number_format(0, '.', ',') }}</dfn></div>
                             <div><span>Acres:</span><dfn>{{ LotSizeArea }}</dfn></div>
@@ -97,7 +98,26 @@
                                     <a href="#"><img src="{{ asset('images/favorite.gif') }}" alt=""></a>
                                 </div>
                             </div>
+                        </div>-->
+                        <div class="address-deals">
+                            <div class="address-size">
+                                <div><span>Sq Ft:</span><dfn>{{ SqftTotal|number_format(0, '.', ',') }}</dfn></div>
+                                <div><span>Acres:</span><dfn>{{ LotSizeArea }}</dfn></div>
+                                <div><span>Yr Built:</span><dfn>{{ YearBuilt }}</dfn></div>
+                                <div><span>Garage:</span><dfn>TBD</dfn></div>
+                            </div>
+                            <div class="address-link">
+                                <div class="slide-info-details-btn-wrap">
+                                    <a href="{{path('details')}}/{{Matrix_Unique_ID}}"><img src="{{ asset('images/details.gif') }}" alt=""></a>
+                                    <a href="#" class="preview"><img src="{{ asset('images/preview.gif') }}" alt=""></a>
+                                </div>
+                                <div class="slide-info-details-link">
+                                    <a href="#"><img src="{{ asset('images/share.gif') }}" alt=""></a>
+                                    <a href="#"><img src="{{ asset('images/favorite.gif') }}" alt=""></a>
+                                </div>
+                            </div>
                         </div>
+                        <div class="subdivision"><span>Subdivision:</span><dfn> {{ SubdivisionName }}</dfn></div>
                     </div>
                 </div>
                 </div> <!-- End Ajax Results -->
