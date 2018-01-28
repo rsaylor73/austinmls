@@ -3,14 +3,19 @@
 namespace AppBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 class Pageinate {
 
     protected $em;
+    protected $container;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager,ContainerInterface $container)
     {
         $this->em = $entityManager;
+        $this->container = $container;
     }
 
    public function map_numbers($max,$pages) {
@@ -31,6 +36,8 @@ class Pageinate {
 
     public function page_numbers($sql,$page) {
         $em = $this->em;
+        $container = $this->container;
+
         $max = "12";
 
         // init

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+	{% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+	<div class="row top-buffer">
+		<div class="col-sm-12">
+			<h3>My Saved Search</h3>
+		</div>
+	</div>
+	{% include('flash-messages.html.twig') %}
+
+	<div class="row top-buffer">
+		<div class="col-sm-8">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for d in data %}
+					<tr>
+						<td>{{d.title}}</td>
+						<td>
+							<input type="button" value="Open Link" class="btn btn-primary"
+							onclick="document.location.href='{{ path('list-map') }}?s=1{{d.link}}'">&nbsp;
+							<input type="button" value="Edit" class="btn btn-success" onclick="document.location.href='{{path('editsavesearch',{'id':d.id})}}'">&nbsp;
+							<input type="button" value="Delete" class="btn btn-warning"
+							onclick="if(confirm('You are about to delete {{d.title}} from your list. Click OK to continue.')) { document.location.href='{{path('deletesavesearch',{'id':d.id})}}'}">
+						</td>
+					</tr>
+				{% endfor %}
+				{% if data == "" %}
+				<tr><td colspan="3"><font color="blue">There are no properties in your saved search.</font></td></tr>
+				{% endif %}
+				</tbody>
+			</table>
+		</div>
+
+
+
+
+<br><br><br><br><br><br>
+
+{% endblock %}
+
+{% block footer %}
+	{% include('footer.html.twig') %}
+{% endblock %}

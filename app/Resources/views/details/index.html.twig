@@ -51,6 +51,11 @@
                     ================================= -->
                     <div class="feature-form-section">
                         <div class="slide-info-details-link">
+                            {% if app.session.get('id') %}
+                                <a href="{{path('addfavorite', {'Matrix_Unique_ID': Matrix_Unique_ID}) }}">
+                                <img src="{{asset('images/share-grey.gif')}}" alt="">
+                                </a>
+                            {% endif %}
                             <a href="#"><img src="{{asset('images/share-grey.gif')}}" alt=""></a>
                             <a href="#"><img src="{{asset('images/print-property-info.gif')}}" alt=""></a>
                             <a href="#"><img src="{{asset('images/download-property-info.gif')}}" alt=""></a>

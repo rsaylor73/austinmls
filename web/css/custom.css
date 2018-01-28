@@ -17,4 +17,23 @@
 #list-map .pagination {
     margin: 10px 0px 10px 5%;
 }
+
+.top-buffer { margin-top:10px; margin-left:10px; margin-right:10px; }
+
+.pad-top {
+    padding-top:15px;
+}
+.div-square {
+    padding:5px;
+    border:3px double #e1e1e1;
+    -webkit-border-radius:8px;
+   -moz-border-radius:8px;
+    border-radius:8px;
+    margin:5px;
+
+}
+.div-square> a,.div-square> a:hover {
+    color:#808080;
+     text-decoration:none;
+}
 /*------------------------------pagination style end --------------------------------------*/

@@ -23,7 +23,7 @@ class HomeController extends Controller
         $result->execute();
         while ($row = $result->fetch()) {
             $id = $row['Matrix_Unique_ID'];
-            print "ID: $id<br>";
+            //print "ID: $id<br>";
 
             $counter = "0";
             $data = $Properties->getAllImage($id);
@@ -248,7 +248,6 @@ class HomeController extends Controller
             $date_sql = "AND `date_updated` BETWEEN '$date1s' AND '$date2s'";
         }
 
-
         $sql = "
         SELECT `Matrix_Unique_ID`,`Latitude`,`Longitude`,`ListPrice`,`Address`,
         `City`,`StateOrProvince`,`PostalCode`,`NumMainLevelBeds`,`NumOtherLevelBeds`,
@@ -307,6 +306,18 @@ class HomeController extends Controller
         }
 
         /* BEGIN Paginate */
+        //$sql_check = $sql . " LIMIT 1";
+
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        $total_records = $result->rowCount();
+        $records = $total_records;
+
+        if ($total_records < 1) {
+            $this->addFlash('danger','Your search did not return any records.');
+            return $this->redirectToRoute('homepage'); 
+        }
+
         $paginate_output = ""; // init
         $pageinate_output = $Pageinate->page_numbers($sql,$page);
         $sql .= " LIMIT $next,$limit";
@@ -389,7 +400,7 @@ class HomeController extends Controller
         $sql = json_encode($sql);
         return $this->render('home/'.$template,[
             'Matrix_Unique_ID' => $Matrix_Unique_ID,
-	    'featured' => $featured,
+	        'featured' => $featured,
             'justin' => $justin,
             'property' => $data,
             'images' => $images,
@@ -408,6 +419,7 @@ class HomeController extends Controller
             'params' => $params,
             'paginate' => $pageinate_output,
             'url' => $url,
+            'records' => $records,
         ]);
     }
 
@@ -493,5 +505,6 @@ class HomeController extends Controller
             'SubdivisionName' => $SubdivisionName,
         ]);
     }
+
 
 }

@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+	{% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+	{% set userType = app.session.get('userType') %}
+
+	<div class="row top-buffer">
+		<div class="col-sm-12">
+			<h3>Admin Dashboard</h3>
+		</div>
+	</div>
+
+	<div class="row text-center pad-top">            
+	    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+	        <div class="div-square">
+	            <a href="{{path('dashboard')}}" >
+	            <i class="fa fa-home fa-5x"></i><br>
+	            <h4>Home</h4>
+	            </a>
+	        </div>            
+	    </div>
+
+	    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+	        <div class="div-square">
+	            <a href="{{path('users')}}" >
+	            <i class="fa fa-users fa-5x"></i><br>
+	            <h4>Manage Users</h4>
+	            </a>
+	        </div>            
+	    </div>
+
+	    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+	        <div class="div-square">
+	            <a href="#" >
+	            <i class="fa fa-thumbs-o-up fa-5x"></i><br>
+	            <h4>Manage Favorites</h4>
+	            </a>
+	        </div>            
+	    </div>
+
+	    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+	        <div class="div-square">
+	            <a href="#" >
+	            <i class="fa fa-search fa-5x"></i><br>
+	            <h4>Manage Searches</h4>
+	            </a>
+	        </div>            
+	    </div>
+
+	    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+	        <div class="div-square">
+	            <a href="#" >
+	            <i class="fa fa-cloud fa-5x"></i><br>
+	            <h4>Manage Featured</h4>
+	            </a>
+	        </div>            
+	    </div>
+	</div>
+
+
+
+<br><br><br><br><br><br>
+
+{% endblock %}
+
+{% block footer %}
+	{% include('footer.html.twig') %}
+{% endblock %}

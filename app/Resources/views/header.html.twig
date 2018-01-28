@@ -9,6 +9,7 @@
        
     <link href="https://fonts.googleapis.com/css?family=Lato:900|Roboto:300,400,400i,500,700" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/custom.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/selectric.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/slick-theme.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/slick.css') }}">
@@ -30,6 +31,9 @@
     <script type="text/javascript" src="{{ asset('scripts/jquery.simplePagination.js') }}"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     </head>
 
     <body>
@@ -568,7 +572,7 @@
                         </div>
                         <div class="login-and-signup-section">
                             <div class="login-wrap">
-                                {% if app.session.get('email') %}
+                                {% if app.session.get('id') %}
                                     <a href="{{path('userlogout')}}" id="logout">Logout</a>&nbsp;
                                     <a href="{{path('dashboard')}}" id="dashboard">Dashboard</a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
