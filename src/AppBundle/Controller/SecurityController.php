@@ -21,7 +21,7 @@ class SecurityController extends Controller
     	$first = $request->request->get('first');
     	$last = $request->request->get('last');
     	$email = $request->request->get('email');
-    	$phone = $request->request->get('email');
+    	$phone = $request->request->get('phone');
     	$password = $request->request->get('password');
     	$password2 = $request->request->get('password2');
 
@@ -49,6 +49,14 @@ class SecurityController extends Controller
         ";
         $result = $em->getConnection()->prepare($sql);
         $result->execute();
+
+        $session = $this->get('commonservices')->GetSessionData();
+        $session->set('first',$first);
+        $session->set('last',$last);
+        $session->set('email',$email);
+        $session->set('phone',$phone);
+        $id = $em->getConnection()->lastInsertId();
+        $session->set('id',$id);
         
         $this->addFlash('success','Your account was created.');
         return $this->redirectToRoute('homepage');

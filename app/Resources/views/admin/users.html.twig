@@ -5,7 +5,7 @@
 
 {% block body %}
 
-	{% set userType = app.session.get('userType') %}
+	{% include('flash-messages.html.twig') %}
 
 	<div class="row top-buffer">
 		<div class="col-sm-12">
@@ -35,9 +35,9 @@
 						<td>{{d.active}}</td>
 						<td>{{d.date}}</td>
 						<td>
-							<input type="button" value="Edit" class="btn btn-primary">&nbsp;
+							<input type="button" value="Edit" class="btn btn-primary" onclick="document.location.href='{{path('edituser', {'id':d.id}  )}}  '">&nbsp;
 							<input type="button" value="Delete" class="btn btn-danger"
-							onclick="if(confirm('You are about to delete {{d.first}} {{d.last}}. Click OK to continue.')) { document.location.href='' }">
+							onclick="if(confirm('You are about to delete {{d.first}} {{d.last}}. Click OK to continue.')) { document.location.href='{{path('deleteuser', {'id': d.id})}}' }">
 						</td>
 					</tr>
 					{% endfor %}

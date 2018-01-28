@@ -36,6 +36,7 @@ class AdminController extends Controller
 
         $sql = "
         SELECT
+            `u`.`id`,
             `u`.`first`,
             `u`.`last`,
             `u`.`email`,
@@ -65,6 +66,99 @@ class AdminController extends Controller
         ]);
     } 
 
+    /**   
+     * @Route("/edituser", name="edituser")
+     */
+    public function edituserAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('commonservices')->GetSessionData();
+        $userType = $session->get('userType');
+        $this->admin_access($userType);
+
+        $userID = $request->query->get('id');
+
+        $sql = "
+        SELECT
+            `u`.`id`,
+            `u`.`first`,
+            `u`.`last`,
+            `u`.`phone`,
+            `u`.`email`,
+            `u`.`userType`,
+            `u`.`active`,
+            DATE_FORMAT(`u`.`date`,'%m/%d/%Y') AS 'date'
+        FROM
+            `users` u
+        WHERE
+            `u`.`id` = '$userID'
+        ";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        $data = "";
+        while ($row = $result->fetch()) {
+            foreach ($row as $key=>$value) {
+                $data[$key] = $value;
+            }
+        }
+
+        return $this->render('admin/edituser.html.twig',[
+            'data' => $data,
+        ]);
+    }
+
+    /**   
+     * @Route("/updateuser", name="updateuser")
+     */
+    public function updateuserAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('commonservices')->GetSessionData();
+        $userType = $session->get('userType');
+        $this->admin_access($userType);
+
+        $id = $request->request->get('id');
+        $first = $request->request->get('first');
+        $last = $request->request->get('last');
+        $email = $request->request->get('email');
+        $phone = $request->request->get('phone');
+        $userType = $request->request->get('userType');
+        $active = $request->request->get('active');
+
+        $sql = "UPDATE `users` SET
+        `first` = '$first',
+        `last` = '$last',
+        `email` = '$email',
+        `phone` = '$phone',
+        `userType` = '$userType',
+        `active` = '$active'
+        WHERE `id` = '$id'
+        ";
+
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        $this->addFlash('success','The user was updated.');
+        return $this->redirectToRoute('users');
+
+    }
+
+    /**   
+     * @Route("/deleteuser", name="deleteuser")
+     */
+    public function deleteuserAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('commonservices')->GetSessionData();
+        $userType = $session->get('userType');
+        $this->admin_access($userType);
+        $id = $request->query->get('id');
+        $sql = "DELETE FROM `users` WHERE `id` = '$id'";
+
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        $this->addFlash('success','The user was deleted.');
+        return $this->redirectToRoute('users');
+    }
 
     private function admin_access($userType) {
         if($userType != "admin") {
