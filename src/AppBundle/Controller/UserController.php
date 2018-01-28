@@ -19,12 +19,14 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('commonservices')->GetSessionData();
         $id = $session->get('id');
-        if(isset($id)) {
-        	return $this->render('user/dashboard.html.twig');
-        } else {
-        	$this->addFlash('danger','Your session has expired. Please log back in.');
-			return $this->redirectToRoute('homepage');  
+
+        $logged = $this->user_access($id);
+        if ($logged == "no") {
+            return $this->redirectToRoute('homepage');
         }
+
+        return $this->render('user/dashboard.html.twig');
+
     }        
 
     /**   
@@ -37,8 +39,8 @@ class UserController extends Controller
         $email = $session->get('email');
         $id = $session->get('id');
 
-        if(!isset($id)) {
-            $this->addFlash('danger','Your session has expired. Please log back in.');
+        $logged = $this->user_access($id);
+        if ($logged == "no") {
             return $this->redirectToRoute('homepage');
         }
 
@@ -66,8 +68,8 @@ class UserController extends Controller
         $session = $this->get('commonservices')->GetSessionData();
         $id = $session->get('id');
 
-        if(!isset($id)) {
-            $this->addFlash('danger','Your session has expired. Please log back in.');
+        $logged = $this->user_access($id);
+        if ($logged == "no") {
             return $this->redirectToRoute('homepage');
         }
 
@@ -109,8 +111,8 @@ class UserController extends Controller
         $session = $this->get('commonservices')->GetSessionData();
         $id = $session->get('id');
 
-        if(!isset($id)) {
-            $this->addFlash('danger','Your session has expired. Please log back in.');
+        $logged = $this->user_access($id);
+        if ($logged == "no") {
             return $this->redirectToRoute('homepage');
         }
 
@@ -139,8 +141,8 @@ class UserController extends Controller
         $session = $this->get('commonservices')->GetSessionData();
         $id = $session->get('id');
 
-        if(!isset($id)) {
-            $this->addFlash('danger','Your session has expired. Please log back in.');
+        $logged = $this->user_access($id);
+        if ($logged == "no") {
             return $this->redirectToRoute('homepage');
         }
 
@@ -191,8 +193,8 @@ class UserController extends Controller
         $session = $this->get('commonservices')->GetSessionData();
         $id = $session->get('id');
 
-        if(!isset($id)) {
-            $this->addFlash('danger','Your session has expired. Please log back in.');
+        $logged = $this->user_access($id);
+        if ($logged == "no") {
             return $this->redirectToRoute('homepage');
         }
 
@@ -217,8 +219,8 @@ class UserController extends Controller
         $params = $request->query->get('p');
         $records = $request->query->get('r');
 
-        if(!isset($id)) {
-            $this->addFlash('danger',"Your session has expired. Please log back in.");
+        $logged = $this->user_access($id);
+        if ($logged == "no") {
             return $this->redirectToRoute('homepage');
         }
 
@@ -245,8 +247,8 @@ class UserController extends Controller
         $session = $this->get('commonservices')->GetSessionData();
         $id = $session->get('id');
 
-        if(!isset($id)) {
-            $this->addFlash('danger',"Your session has expired. Please log back in.");
+        $logged = $this->user_access($id);
+        if ($logged == "no") {
             return $this->redirectToRoute('homepage');
         }
 
@@ -276,8 +278,8 @@ class UserController extends Controller
         $id = $session->get('id');
         $id2 = $request->query->get('id');
 
-        if(!isset($id)) {
-            $this->addFlash('danger',"Your session has expired. Please log back in.");
+        $logged = $this->user_access($id);
+        if ($logged == "no") {
             return $this->redirectToRoute('homepage');
         }
 
@@ -307,8 +309,8 @@ class UserController extends Controller
         $id2 = $request->request->get('id');
         $title = $request->request->get('title');
 
-        if(!isset($id)) {
-            $this->addFlash('danger',"Your session has expired. Please log back in.");
+        $logged = $this->user_access($id);
+        if ($logged == "no") {
             return $this->redirectToRoute('homepage');
         }
 
@@ -330,11 +332,11 @@ class UserController extends Controller
         $id = $session->get('id');
         $id2 = $request->query->get('id');
 
-        if(!isset($id)) {
-            $this->addFlash('danger',"Your session has expired. Please log back in.");
+        $logged = $this->user_access($id);
+        if ($logged == "no") {
             return $this->redirectToRoute('homepage');
         }
-
+        
         $sql = "DELETE FROM `saved_search` WHERE `id` = '$id2' AND `userID` = '$id'";
         $result = $em->getConnection()->prepare($sql);
         $result->execute();
@@ -342,4 +344,18 @@ class UserController extends Controller
         $this->addFlash('success',"Your saved search was removed.");
         return $this->redirectToRoute('listsavesearch');
     }
+
+
+
+
+    private function user_access($id) {
+        $logged = "no";
+        if(!isset($id)) {
+            $this->addFlash('danger',"You are not logged in. To use this feature please either login or register.");
+        } else {
+            $logged = "yes";
+        }
+        return($logged);
+    }
+
 }

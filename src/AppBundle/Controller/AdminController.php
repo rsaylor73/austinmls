@@ -19,7 +19,11 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('commonservices')->GetSessionData();
         $userType = $session->get('userType');
-        $this->admin_access($userType);
+
+        $logged = $this->admin_access($userType);
+        if ($logged == "no") {
+            return $this->redirectToRoute('homepage');
+        }
 
 		return $this->render('admin/dashboard.html.twig');
     } 
@@ -32,7 +36,10 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('commonservices')->GetSessionData();
         $userType = $session->get('userType');
-        $this->admin_access($userType);
+        $logged = $this->admin_access($userType);
+        if ($logged == "no") {
+            return $this->redirectToRoute('homepage');
+        }
 
         $sql = "
         SELECT
@@ -74,7 +81,10 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('commonservices')->GetSessionData();
         $userType = $session->get('userType');
-        $this->admin_access($userType);
+        $logged = $this->admin_access($userType);
+        if ($logged == "no") {
+            return $this->redirectToRoute('homepage');
+        }
 
         $userID = $request->query->get('id');
 
@@ -115,7 +125,10 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('commonservices')->GetSessionData();
         $userType = $session->get('userType');
-        $this->admin_access($userType);
+        $logged = $this->admin_access($userType);
+        if ($logged == "no") {
+            return $this->redirectToRoute('homepage');
+        }
 
         $id = $request->request->get('id');
         $first = $request->request->get('first');
@@ -150,7 +163,11 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $session = $this->get('commonservices')->GetSessionData();
         $userType = $session->get('userType');
-        $this->admin_access($userType);
+        $logged = $this->admin_access($userType);
+        if ($logged == "no") {
+            return $this->redirectToRoute('homepage');
+        }
+
         $id = $request->query->get('id');
         $sql = "DELETE FROM `users` WHERE `id` = '$id'";
 
@@ -161,10 +178,14 @@ class AdminController extends Controller
     }
 
     private function admin_access($userType) {
+        $logged = "no";
         if($userType != "admin") {
             $this->addFlash('danger','Your session has expired or you do not have access. Please log back in.');
-            return $this->redirectToRoute('homepage');
+
+        } else {
+            $logged = "yes";
         }    	
+        return($logged);
     }
 
 }
