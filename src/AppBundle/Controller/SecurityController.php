@@ -12,6 +12,14 @@ class SecurityController extends Controller
 {
 
     /**   
+     * @Route("/warning", name="warning")
+     */
+    public function warningAction(Request $request)
+    {
+        return $this->render('user/warnings.html.twig');
+    }
+
+    /**   
      * @Route("/saveuser", name="saveuser")
      */
     public function saveuserAction(Request $request)

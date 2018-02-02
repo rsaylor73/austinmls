@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+	{% include('header.html.twig') %}
+{% endblock %}
+
+{% block body %}
+
+	{% include('flash-messages.html.twig') %}
+
+	<div class="row top-buffer">
+		<div class="col-sm-12">
+			<h3>Manage Featured</h3>
+		</div>
+	</div>
+
+	<form action="{{path('addfeatured')}}" method="post">
+	<div class="row top-buffer">
+		<div class="col-sm-2">
+			MLS Number:
+		</div>
+		<div class="col-sm-2">
+			<input type="text" name="mls" class="form-control">
+		</div>
+		<div class="col-sm-2">
+			<input type="submit" value="Add MLS" class="btn btn-success">
+		</div>
+	</div>
+	</form>
+
+
+  
+	<div class="row top-buffer">
+		<div class="col-sm-12">
+			<table class="table table-striped" id="myTable">
+				<thead>
+					<th>MLS Number</th>
+					<th>Date Added</th>
+					<th>Property</th>
+					<th>Actions</th>
+				</thead>
+				<tbody>
+				{% for d in data %}
+				<tr>
+					<td>{{d.mls}}</a></td>
+					<td>{{d.date}}</td>
+					<td><a href="{{path('details', {'id': d.Matrix_Unique_ID})}}">{{d.Address}}, {{d.City}}, {{d.StateOrProvince}}</a></td>
+					<td>
+						<input type="text" value="Delete" class="btn btn-warning" onclick="if(confirm('You are about to delete {{d.Address}}, {{d.City}}, {{d.StateOrProvince}} from the featured list. Click OK to continue.')) { document.location.href=' {{path('admindeletefeatured', {'id': d.id } )}}   '}">
+					</td>
+				</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+<br><br><br><br><br><br>
+
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable({
+      "aaSorting": []
+    });
+});
+</script>
+
+
+{% endblock %}
+
+{% block footer %}
+	{% include('footer.html.twig') %}
+{% endblock %}

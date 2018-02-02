@@ -17,7 +17,7 @@
                                 {% include('flash-messages.html.twig') %}
 				<h2>{{Address}}<span>{{City}}, {{StateOrProvince}} {{PostalCode}}</span></h2>
                                 <div class="active-favorite">
-                                    <a href="#" class="feature-active-btn">Active</a>
+                                    <!--<a href="#" class="feature-active-btn">Active</a>-->
                                     <a href="{{path('addfavorite', {'Matrix_Unique_ID': Matrix_Unique_ID}) }}" class="feature-favorites-btn"><img src="{{asset('images/preview-favorites.gif')}}" alt=""></a>
                                 </div>
                             </div>
@@ -35,8 +35,7 @@
                             </div>
                             <div class="feature-content-figure">
                                 <figure>
-                                    <!--<img src="{{asset('properties')}}\{{ images }}" alt="">-->
-                                    <img src="{{ asset('images/property-image-size.jpg') }}" alt="">
+                                    <img src="{{asset('properties')}}\{{ images }}" alt="">
                                 </figure>
                                 <div class="feature-content-icon">
                                     <a href="#"><img src="{{asset('images/camera-icon.jpg')}}" alt=""></a>
@@ -329,8 +328,7 @@
                                         {% if s.images is defined %}
                                             {% for value in s.images %}
                                                 <li class="slide">
-                                                   <!-- <img src="{{ asset('properties/')}}{{value}}" alt="">-->
-                                                    <img src="{{ asset('images/property-image-size.jpg') }}" alt="">
+                                                   <img src="{{ asset('properties/')}}{{value}}" alt="">
                                                 </li>
                                             {% endfor %}
                                         {% endif %}

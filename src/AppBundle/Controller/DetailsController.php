@@ -23,6 +23,18 @@ class DetailsController extends Controller
         	$id = $request->query->get('id');
         }
 
+        $session = $this->get('commonservices')->GetSessionData();
+        $userID = $session->get('id');
+        $counter = "0";
+        if ($userID == "") {
+        	$counter = $session->get('counter');
+        	$counter++;
+        	$session->set('counter',$counter);
+        	if ($counter > 3) {
+        		return $this->redirectToRoute('warning');
+        	}
+        }
+
         $sql = "
         SELECT `Matrix_Unique_ID`,`Latitude`,`Longitude`,`ListPrice`,`Address`,
         `City`,`StateOrProvince`,`PostalCode`,`NumMainLevelBeds`,`NumOtherLevelBeds`,
