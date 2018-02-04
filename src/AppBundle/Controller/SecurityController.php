@@ -116,4 +116,84 @@ class SecurityController extends Controller
         return $this->redirectToRoute('homepage'); 
 
     }
+
+    /**   
+     * @Route("/forgotpassword", name="forgotpassword")
+     */
+    public function forgotpasswordAction(Request $request)
+    {
+
+        $session = $this->get('commonservices')->GetSessionData();
+        $session->clear();
+
+        return $this->render('user/forgotpassword.html.twig'); 
+
+    }
+
+    /**   
+     * @Route("/sendpassword", name="sendpassword")
+     */
+    public function sendpasswordAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $session = $this->get('commonservices')->GetSessionData();
+        $session->clear();
+
+        $email = $request->request->get('email');
+
+        $new_pw = $this->randomPassword();
+        $hashed_password = password_hash($new_pw, PASSWORD_BCRYPT);
+
+        $sql = "SELECT `first`,`id`,`email` FROM `users` WHERE `email` = '$email' AND `active` = 'Yes'";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        while ($row = $result->fetch()) {
+            $sql2 = "UPDATE `users` SET `password` = '$hashed_password' WHERE `id` = '$row[id]'";
+            $result2 = $em->getConnection()->prepare($sql2);
+            $result2->execute();
+
+            $site_name = $this->container->getParameter('site_name');
+            $site_email = $this->container->getParameter('site_email');
+
+            $url = $this->container->getParameter('site_url');
+
+            $message = (new \Swift_Message('New property request'))
+                ->setFrom($site_email)
+                ->setTo($row['email'])
+                ->setSubject('Forgot Password')
+                ->setBody(
+                    $this->renderView(
+                        'email/forgotpassword.html.twig',
+                        array(
+                            'first' => $row['first'],
+                            'email' => $row['email'],
+                            'password' => $new_pw,
+                            'site_name' => $site_name,
+                            'url' => $url
+                        )
+                    ),
+                    'text/html'
+                )
+            ;
+
+            $this->get('mailer')->send($message);
+
+        }        
+
+        $this->addFlash('info','Your password was reset. Please check your email for your new password.');
+        return $this->redirectToRoute('homepage'); 
+
+    }
+
+    private function randomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); //remember to declare $pass as an array
+        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); //turn the array into a string
+    }
+
 }

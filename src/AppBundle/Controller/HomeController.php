@@ -252,7 +252,8 @@ class HomeController extends Controller
         SELECT `Matrix_Unique_ID`,`Latitude`,`Longitude`,`ListPrice`,`Address`,
         `City`,`StateOrProvince`,`PostalCode`,`NumMainLevelBeds`,`NumOtherLevelBeds`,
         `BathsHalf`,`NumGuestHalfBaths`,`NumGuestFullBaths`,`BathsFull`,`SqftTotal`,
-        `LotSizeArea`,`YearBuilt`,`CoveredSpaces`,`SubdivisionName`,`MLSNumber`,`BedsTotal`
+        `LotSizeArea`,`YearBuilt`,`CoveredSpaces`,`SubdivisionName`,`MLSNumber`,`BedsTotal`,
+        `GarageDescription`
 
         FROM
             `properties`
@@ -369,6 +370,7 @@ class HomeController extends Controller
                 $images = $this->getMainImage($Matrix_Unique_ID,$em);
                 $Latitude = $property['Latitude'];
                 $Longitude = $property['Longitude'];
+                $GarageDescription = $property['GarageDescription'];
 
                 if ($half_bath == "1") {
                     $half_bath = "5";
@@ -393,6 +395,7 @@ class HomeController extends Controller
             $images = "";
             $Latitude = "";
             $Longitude = "";
+            $GarageDescription = "";
         }
 
         $featured = "10";
@@ -420,6 +423,7 @@ class HomeController extends Controller
             'paginate' => $pageinate_output,
             'url' => $url,
             'records' => $records,
+            'GarageDescription' => $GarageDescription,
         ]);
     }
 
@@ -451,7 +455,7 @@ class HomeController extends Controller
         SELECT `Matrix_Unique_ID`,`Latitude`,`Longitude`,`ListPrice`,`Address`,
         `City`,`StateOrProvince`,`PostalCode`,`NumMainLevelBeds`,`NumOtherLevelBeds`,
         `BathsHalf`,`NumGuestHalfBaths`,`NumGuestFullBaths`,`BathsFull`,`SqftTotal`,
-        `LotSizeArea`,`YearBuilt`,`CoveredSpaces`,`SubdivisionName`,`MLSNumber`
+        `LotSizeArea`,`YearBuilt`,`CoveredSpaces`,`SubdivisionName`,`MLSNumber`,`GarageDescription`
 
         FROM
             `properties`
@@ -479,6 +483,7 @@ class HomeController extends Controller
             $YearBuilt = $property['YearBuilt'];
             $SubdivisionName = $property['SubdivisionName'];
             $images = $this->getMainImage($Matrix_Unique_ID,$em);
+            $GarageDescription = $property['GarageDescription'];
         }
 
 
@@ -503,6 +508,7 @@ class HomeController extends Controller
             'LotSizeArea' => $LotSizeArea,
             'YearBuilt' => $YearBuilt,
             'SubdivisionName' => $SubdivisionName,
+            'GarageDescription' => $GarageDescription,
         ]);
     }
 
