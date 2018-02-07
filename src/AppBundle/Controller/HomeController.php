@@ -401,6 +401,11 @@ class HomeController extends Controller
         $featured = "10";
         $justin = "5";
         $sql = json_encode($sql);
+
+
+        // Featured Properties
+        $featuredData = $this->get('commonservices')->GetFeatured();
+
         return $this->render('home/'.$template,[
             'Matrix_Unique_ID' => $Matrix_Unique_ID,
 	        'featured' => $featured,
@@ -424,6 +429,7 @@ class HomeController extends Controller
             'url' => $url,
             'records' => $records,
             'GarageDescription' => $GarageDescription,
+            'featuredData' => $featuredData,
         ]);
     }
 
