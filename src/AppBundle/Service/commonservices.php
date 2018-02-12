@@ -204,5 +204,78 @@ class commonservices {
         return($data);
     }
 
+    public function GetJustListed() {
+
+        $em = $this->em;
+
+        $data = array();
+        $date = date("Ymd");
+
+        $sql = "
+        SELECT
+            `p`.`Matrix_Unique_ID`,
+            `p`.`Address`,
+            `p`.`City`,
+            `p`.`StateOrProvince`,
+            `p`.`PostalCode`,
+            `p`.`NumMainLevelBeds`,
+            `p`.`NumOtherLevelBeds`,
+            `p`.`BathsHalf`,
+            `p`.`SqftTotal`,
+            `p`.`BedsTotal`,
+            `p`.`ListPrice`,
+            `p`.`NumMainLevelBeds` + `NumOtherLevelBeds` AS 'beds',
+            `p`.`BathsHalf` + `NumGuestHalfBaths` AS 'halfbath',
+            `p`.`BathsFull` + `NumGuestFullBaths` AS 'bath',
+            `p`.`SqftTotal`,
+            `p`.`LotSizeArea`,
+            `p`.`YearBuilt`,
+            `p`.`SubdivisionName`
+
+        FROM
+            `properties` p
+
+
+        WHERE
+            1
+            AND `p`.`date_added` = '$date'
+
+        ORDER BY RAND()
+
+        LIMIT 6
+        ";
+        $result = $em->getConnection()->prepare($sql);
+        $result->execute();
+        
+        $i = "0";
+        $data = array();
+        while ($row = $result->fetch()) {
+            foreach ($row as $key=>$value) {
+                $data[$i][$key] = $value;
+            }
+
+            // images
+            $sql2 = "
+            SELECT `image`,`sequence` 
+            FROM `images` 
+            WHERE `matrixUniqueId` = '$row[Matrix_Unique_ID]'
+            ORDER BY `sequence` ASC
+            ";
+
+            $result2 = $em->getConnection()->prepare($sql2);
+            $result2->execute();
+            $sequence = "";
+            while ($row2 = $result2->fetch()) {
+                $sequence = $row2['sequence'];
+                $data[$i]['images'][$sequence] = $row2['image'];
+            }
+            if ($sequence == "") {
+                $data[$i]['images'][0] = "";
+            }
+
+            $i++;
+        }
+        return($data);
+    }
 
 }

@@ -406,6 +406,9 @@ class HomeController extends Controller
         // Featured Properties
         $featuredData = $this->get('commonservices')->GetFeatured();
 
+        // Just Listed Properties
+        $justlistedData = $this->get('commonservices')->GetJustListed();
+
         return $this->render('home/'.$template,[
             'Matrix_Unique_ID' => $Matrix_Unique_ID,
 	        'featured' => $featured,
@@ -430,6 +433,7 @@ class HomeController extends Controller
             'records' => $records,
             'GarageDescription' => $GarageDescription,
             'featuredData' => $featuredData,
+            'justlistedData' => $justlistedData,
         ]);
     }
 
